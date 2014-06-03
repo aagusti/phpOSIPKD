@@ -188,7 +188,7 @@ class pos_tp extends CI_Controller {
       
       }
       
-      $user_id = $this->pos_tp_model->update($data);
+      $user_id = $this->pos_tp_model->update($this->input->post('id'), $data);
       
 			$this->session->set_flashdata('msg_success', 'Data telah disimpan');
       redirect(active_module_url('pos_tp'));

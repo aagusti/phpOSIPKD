@@ -68,7 +68,7 @@ class pos_tp_model extends CI_Model {
 	
 	function update($id, $data) {
     $this->db->trans_start();
-    $this->db->where('id', $data);
+    $this->db->where('id', $id);
     
     $this->db->update($this->tbl,$data);
 
