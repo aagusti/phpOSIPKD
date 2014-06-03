@@ -145,7 +145,7 @@ class pos_tp extends CI_Controller {
 			if (DEF_POS_TYPE==2){
           $data['dt']['kd_bank_tunggal'] = $get->kd_bank_tunggal;
           $data['dt']['kd_bank_persepsi'] = $get->kd_bank_persepsi;
-          $data['dt']['kd_bank_kppbb'] = $get->kd_kppbb;
+          $data['dt']['kd_kppbb'] = $get->kd_kppbb;
       }
       else{
           $data['dt']['kd_kantor'] = $get->kd_kantor;
