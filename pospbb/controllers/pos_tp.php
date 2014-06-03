@@ -178,14 +178,13 @@ class pos_tp extends CI_Controller {
 				'alamat_tp' => $this->input->post('alamat_tp'),
 				'no_rek_tp' => $this->input->post('no_rek_tp'),
 			);
-      if (DEF_POS_TYPE==1){
+      if (DEF_POS_TYPE==2){
          $data['kd_bank_tunggal'] = $this->input->post('kd_bank_tunggal');
          $data['kd_bank_persepsi'] = $this->input->post('kd_bank_persepsi');
          $data['kd_kppbb'] = $this->input->post('kd_kppbb');
          
       }else{
          $data['kd_kantor'] = $this->input->post('kd_kantor');
-      
       }
       
       $user_id = $this->pos_tp_model->update($this->input->post('id'), $data);
