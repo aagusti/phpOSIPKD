@@ -175,7 +175,7 @@ class pospbb extends CI_Controller
         } else {
             $tglawal     = date('d-m-Y');
             $tglakhir    = date('d-m-Y');
-            $tahun_sppt1 = date('Y'); //'1999'; //minta tahun berjalan, kasih dahh
+            $tahun_sppt1 = '1999'; //minta tahun berjalan, kasih dahh
             $tahun_sppt2 = date('Y');
         }
         $kec_kd      = (isset($_GET['kec_kd']) ? $_GET['kec_kd'] : $data['user_kec_kd']);
@@ -183,7 +183,7 @@ class pospbb extends CI_Controller
         $tahun_sppt1 = (isset($_GET['tahun_sppt1']) ? $_GET['tahun_sppt1'] : $tahun_sppt1);
         $tahun_sppt2 = (isset($_GET['tahun_sppt2']) ? $_GET['tahun_sppt2'] : $tahun_sppt2);
         
-        $buku = (isset($_GET['buku']) ? $_GET['buku'] : '11');
+        $buku = (isset($_GET['buku']) ? $_GET['buku'] : '15');
         
         if (isset($_GET['tglawal']) && $_GET['tglawal']) {
             $tglawal = $_GET['tglawal'];
@@ -289,4 +289,87 @@ class pospbb extends CI_Controller
         $data['apps']    = $this->apps_model->get_active_only();
         $this->load->view('tranmonthsview', $data);
     }
+    
+    public function tranuser()
+    {
+        $this->load_auth();
+        if (!$this->module_auth->read) {
+            $this->session->set_flashdata('msg_warning', $this->module_auth->msg_read);
+            redirect(active_module_url());
+        }
+        
+        //ob_start("ob_gzhandler");
+        $data['iDisplayLength'] = (isset($_GET['iDisplayLength']) && is_numeric($_GET['iDisplayLength'])) ? $_GET['iDisplayLength'] : 15;
+        $data['iDisplayStart']  = (isset($_GET['iDisplayStart']) && is_numeric($_GET['iDisplayStart'])) ? $_GET['iDisplayStart'] : 0;
+        $data['iSortCol_0']     = (isset($_GET['iSortCol_0']) && is_numeric($_GET['iSortCol_0'])) ? $_GET['iSortCol_0'] : 0;
+        $data['iSortingCols']   = (isset($_GET['iSortingCols']) && is_numeric($_GET['iSortingCols'])) ? $_GET['iSortingCols'] : 1;
+        $data['sEcho']          = (isset($_GET['sEcho']) && is_numeric($_GET['sEcho'])) ? $_GET['sEcho'] : 1;
+        $data['sSearch']        = (isset($_GET['sSearch'])) ? $_GET['sSearch'] : "";
+        $data['sSearch_0']      = (isset($_GET['sSearch_0'])) ? $_GET['sSearch_0'] : "";
+        $data['sSearch_1']      = (isset($_GET['sSearch_1'])) ? $_GET['sSearch_1'] : "";
+        $data['sSearch_2']      = (isset($_GET['sSearch_2'])) ? $_GET['sSearch_2'] : "";
+        $data['sSearch_3']      = (isset($_GET['sSearch_3'])) ? $_GET['sSearch_3'] : "";
+        $data['sSearch_4']      = (isset($_GET['sSearch_4'])) ? $_GET['sSearch_4'] : "";
+        $data['sSortDir_0']     = (isset($_GET['sSortDir_0'])) ? $_GET['sSortDir_0'] : "asc";
+        
+        $this->load->model('kecModel', 'kec');
+        $this->load->model('kelModel', 'kel');
+        
+        $data['user_kec_kd'] = get_user_kec_kd();
+        $data['user_kel_kd'] = get_user_kel_kd();
+        
+        if (ENVIRONMENT == 'development') {
+            $tglawal     = '01-07-2013';
+            $tglakhir    = '30-07-2013';
+            $tahun_sppt2 = '2013';
+            $tahun_sppt1 = '2013';
+        } else {
+            $tglawal     = date('d-m-Y');
+            $tglakhir    = date('d-m-Y');
+            $tahun_sppt1 = '1999'; //minta tahun berjalan, kasih dahh
+            $tahun_sppt2 = date('Y');
+        }
+        $kec_kd      = (isset($_GET['kec_kd']) ? $_GET['kec_kd'] : $data['user_kec_kd']);
+        $kel_kd      = (isset($_GET['kel_kd']) ? $_GET['kel_kd'] : $data['user_kel_kd']);
+        $tahun_sppt1 = (isset($_GET['tahun_sppt1']) ? $_GET['tahun_sppt1'] : $tahun_sppt1);
+        $tahun_sppt2 = (isset($_GET['tahun_sppt2']) ? $_GET['tahun_sppt2'] : $tahun_sppt2);
+        
+        $buku = (isset($_GET['buku']) ? $_GET['buku'] : '15');
+        
+        if (isset($_GET['tglawal']) && $_GET['tglawal']) {
+            $tglawal = $_GET['tglawal'];
+        }
+        
+        if (isset($_GET['tglakhir']) && $_GET['tglakhir']) {
+            $tglakhir = $_GET['tglakhir'];
+        }
+        
+        $trantypes         = $this->uri->segment(3, 1);
+        $data['buku']      = $buku;
+        $data['trantypes'] = $trantypes;
+        $data['tglawal']   = $tglawal;
+        $data['tglakhir']  = $tglakhir;
+        $data['kec_kd']    = $kec_kd;
+        $data['kel_kd']    = $kel_kd;
+        
+        $data['tahun_sppt1'] = $tahun_sppt1;
+        $data['tahun_sppt2'] = $tahun_sppt2;
+        
+        $user_kd = (isset($_GET['user_kd']) ? $_GET['user_kd'] : '0');
+        $data['user_kd'] = $user_kd;
+        $data['usertbl']    = $this->load->model('users_model')->get_all();
+        
+        $data['kecamatan']    = $this->kec->getRecord(get_user_kec_kd());
+        $data['kelurahan']    = $this->kel->getRecord($kec_kd, get_user_kel_kd());
+        $data['pagetitle']    = 'OpenSIPKD';
+        $data['title']        = 'Transaksi Pembayaran';
+        $data['main_content'] = '';
+        
+        $data['data_source'] = active_module_url() . "loaddata/tranuser$trantypes?buku=$buku&tahun_sppt1=$tahun_sppt1&tahun_sppt2=$tahun_sppt2&tglawal=$tglawal&tglakhir=$tglakhir&kec_kd=$kec_kd&kel_kd=$kel_kd&user_kd=$user_kd";
+        
+        $data['current'] = 'transaksi';
+        $data['apps']    = $this->apps_model->get_active_only();
+        $this->load->view('tranuserv', $data);
+    }
+    
 }

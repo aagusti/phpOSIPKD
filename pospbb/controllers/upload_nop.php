@@ -35,7 +35,8 @@ class upload_nop extends CI_Controller
 
     public function index()
     {
-        if (!$this->module_auth->read) {
+    
+         if (!$this->module_auth->read) {
             $this->session->set_flashdata('msg_warning', $this->module_auth->msg_read);
             redirect('info');
         }
@@ -108,7 +109,8 @@ class upload_nop extends CI_Controller
                             'jml_sppt_yg_dibayar' => $jml_sppt_yg_dibayar,
                             'tgl_pembayaran_sppt' => $tgl_pembayaran_sppt,
                             'tgl_rekam_byr_sppt' => $tgl_rekam_byr_sppt,
-                            'nip_rekam_byr_sppt' => $nip_rekam_byr_sppt
+                            'nip_rekam_byr_sppt' => $nip_rekam_byr_sppt,
+                            'user_id' => $this->session->userdata('userid')
                         );
 
                         $fields = explode(',', POS_FIELD); //seuai parameter yang ada di master konfig
@@ -137,7 +139,7 @@ class upload_nop extends CI_Controller
     }
 
 	function unggah() { //upload
-		$this->load->library('upload');
+		//$this->load->library('upload');
 
 		if (!empty($_FILES['userfile']['name'])) {
 			$this->load->library('upload');
@@ -154,14 +156,15 @@ class upload_nop extends CI_Controller
 			}
 
 			$config['upload_path'] = dirname(__FILE__) . ('/../dokumen/');
-            $config['overwrite'] = TRUE;
+      
+
+      $config['overwrite'] = TRUE;
 			$config['encrypt_name'] = TRUE;
 			$config['remove_spaces'] = TRUE;
 			$config['max_size']  = 1024 * 5;
 			$config['allowed_types'] = '*';
-            $this->upload->initialize($config);
-
-			if ($this->upload->do_multi_upload("userfile")) {
+      $this->upload->initialize($config);
+      if ($this->upload->do_multi_upload("userfile")) {
 				$uploadinfo = $this->upload->get_multi_upload_data();
 				// foreach ($uploadinfo as $file) { // loop over the upload data
 					// $this->email->attach($file['full_path']); // attach the full path as an email attachments :D
@@ -169,14 +172,15 @@ class upload_nop extends CI_Controller
 
                 //tulis kosong dulu
                 $file = 'dtsrc.xxx';
+                die('X');
                 $dtfile = fopen($file,"w");
                 echo fwrite($dtfile,'');
                 @fclose($dtfile);
-
                 $param = '';
                 $adata = array();
                 $file = $uploadinfo[0]['full_path'];
                 $myfile = fopen($file, "r") or die("Unable to open file!");
+                die('X');
                 while(!feof($myfile)) {
                     // echo fgets($myfile) . "<br>";
 

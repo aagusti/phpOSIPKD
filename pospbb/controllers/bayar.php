@@ -111,11 +111,13 @@ class bayar extends CI_Controller
         
         if ($this->form_validation->run() == TRUE) {
             $nop = trim($this->input->post('prefix')) . trim($this->input->post('nop'));
-            
-            $nop = urldecode($nop);
-            $nop = str_replace('.', '', $nop);
+            $nop1 = urldecode($nop);
+            /*$nop = str_replace('.', '', $nop);
             $nop = str_replace(' ', '', $nop);
             $nop = str_replace('-', '', $nop);
+            */
+            $nop = preg_replace( '/[^0-9]/', '', $nop1);
+            //die($nop);
             
             $thn = $this->input->post('tahun');
             
@@ -128,8 +130,8 @@ class bayar extends CI_Controller
             $kd_jns_op      = substr($nop, -1);
             $thn_pajak_sppt = $thn;
             
-            $denda_sppt          = $this->input->post('denda');
-            $jml_sppt_yg_dibayar = $this->input->post('utang');
+            $denda_sppt          = preg_replace( '/[^0-9]/', '', $this->input->post('denda'));
+            $jml_sppt_yg_dibayar = preg_replace( '/[^0-9]/', '', $this->input->post('utang'));
             
             $data['sisa'] = $denda_sppt;
             
@@ -163,7 +165,8 @@ class bayar extends CI_Controller
                 'jml_sppt_yg_dibayar' => $jml_sppt_yg_dibayar,
                 'tgl_pembayaran_sppt' => $tgl_pembayaran_sppt,
                 'tgl_rekam_byr_sppt' => $tgl_rekam_byr_sppt,
-                'nip_rekam_byr_sppt' => $nip_rekam_byr_sppt
+                'nip_rekam_byr_sppt' => $nip_rekam_byr_sppt,
+                'user_id' => $this->session->userdata('userid')
             );
             
             $fields = explode(',', POS_FIELD);

@@ -49,6 +49,8 @@
                             <li class="dropdown"><a href="<?=active_module_url();?>tranmonths">Rekap Bulanan</a></li>
                             <li class="dropdown"><a href="<?=active_module_url();?>transaksi/2">Rekap Harian</a></li>    
                             <li class="dropdown"><a href="<?=active_module_url();?>transaksi/1">Rincian Harian</a></li>
+                            <li class="dropdown"><a href="<?=active_module_url();?>tranuser/2">Rekap User</a></li>
+                            <li class="dropdown"><a href="<?=active_module_url();?>tranuser/1">Rincian User</a></li>
                         </ul>
                     </li>
                     <? endif; ?>
@@ -66,6 +68,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users<strong class="caret"></strong></a>
                         <ul class="dropdown-menu">
                             <li><a href="<?=active_module_url('pos_user');?>">POSPBB Users</a></li>
+                            <li><a href="<?=active_module_url('pos_tp');?>">Tempat Pembayaran</a></li>
                         </ul>
                     </li>
                     <?endif;?>

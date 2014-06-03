@@ -62,6 +62,7 @@ class sppt_model extends CI_Model
         $nop          = str_replace('.', '', $nop);
         $nop          = str_replace(' ', '', $nop);
         $nop          = str_replace('-', '', $nop);
+        $nop          = preg_replace( '/[^0-9]/', '', $nop);
         $kd_propinsi  = substr($nop, 0, 2);
         $kd_dati2     = substr($nop, 2, 2);
         $kd_kecamatan = substr($nop, 4, 3);
@@ -90,6 +91,8 @@ class sppt_model extends CI_Model
         $nop          = str_replace('.', '', $nop);
         $nop          = str_replace(' ', '', $nop);
         $nop          = str_replace('-', '', $nop);
+        $nop          = preg_replace( '/[^0-9]/', '', $nop);
+
         $kd_propinsi  = substr($nop, 0, 2);
         $kd_dati2     = substr($nop, 2, 2);
         $kd_kecamatan = substr($nop, 4, 3);
@@ -129,6 +132,8 @@ class sppt_model extends CI_Model
       $blok          = str_replace('.', '', $blok);
       $blok          = str_replace(' ', '', $blok);
       $blok          = str_replace('-', '', $blok);
+      $blok          = preg_replace( '/[^0-9]/', '', $blok);
+
       $kd_propinsi  = substr($blok, 0, 2);
       $kd_dati2     = substr($blok, 2, 2);
       $kd_kecamatan = substr($blok, 4, 3);
@@ -157,6 +162,7 @@ class sppt_model extends CI_Model
         having 
               s.pbb_yg_harus_dibayar_sppt-(coalesce(sum(jml_sppt_yg_dibayar),0)-coalesce(sum(ps.denda_sppt),0))>0
       ";
+  //die($sql);
       $query = $this->db->query($sql);
 
       $result['sql']      = $sql;
@@ -173,6 +179,8 @@ class sppt_model extends CI_Model
       $blok          = str_replace('.', '', $blok);
       $blok          = str_replace(' ', '', $blok);
       $blok          = str_replace('-', '', $blok);
+      $blok          = preg_replace( '/[^0-9]/', '', $blok);
+
       $kd_propinsi  = substr($blok, 0, 2);
       $kd_dati2     = substr($blok, 2, 2);
       $kd_kecamatan = substr($blok, 4, 3);
@@ -185,6 +193,8 @@ class sppt_model extends CI_Model
       $blok2          = str_replace('.', '', $blok2);
       $blok2          = str_replace(' ', '', $blok2);
       $blok2          = str_replace('-', '', $blok2);
+      $blok2          = preg_replace( '/[^0-9]/', '', $blok2);
+
       $no_urut_2      = substr($blok2, 0, 4);
       $kd_jenis_2     = substr($blok2, 4, 1);
 

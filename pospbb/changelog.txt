@@ -1,0 +1,8 @@
+2014-06-03 aagusti
+Penambahan Field user_id pada pembayaran_sppt
+Perubahan proses saat simpan data pembayaran
+Penambahan View/Laporan per user
+Penambahan menu tempat_pembayaran
+Penambahan field id
+    alter table tempat_pembayaran add id serial;
+    alter table pembayaran_sppt add user_id integer;    

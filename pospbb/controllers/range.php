@@ -159,12 +159,14 @@ class range extends CI_Controller
         $nop = str_replace('.', '', $nop);
         $nop = str_replace(' ', '', $nop);
         $nop = str_replace('-', '', $nop);
+        $nop = preg_replace( '/[^0-9]/', '', $nop);
 
         $nop2 = trim($this->input->post('blok2'));
         $nop2 = urldecode($nop2);
         $nop2 = str_replace('.', '', $nop2);
         $nop2 = str_replace(' ', '', $nop2);
         $nop2 = str_replace('-', '', $nop2);
+        $nop2 = preg_replace( '/[^0-9]/', '', $nop2);
 
         $thn = $this->input->post('tahun');
 
@@ -218,7 +220,8 @@ class range extends CI_Controller
                         'jml_sppt_yg_dibayar' => $jml_sppt_yg_dibayar,
                         'tgl_pembayaran_sppt' => $tgl_pembayaran_sppt,
                         'tgl_rekam_byr_sppt' => $tgl_rekam_byr_sppt,
-                        'nip_rekam_byr_sppt' => $nip_rekam_byr_sppt
+                        'nip_rekam_byr_sppt' => $nip_rekam_byr_sppt,
+                        'user_id' => $this->session->userdata('userid')
                     );
 
                     $fields = explode(',', POS_FIELD); //seuai parameter yang ada di master konfig

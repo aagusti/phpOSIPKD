@@ -2,7 +2,14 @@
 <? $this->load->view(active_module().'/_navbar'); ?>
 
 <script>
+var formatter = new Intl.NumberFormat('id-ID', {
+  //style: 'currency',
+  //currency: 'IDR ',
+  minimumFractionDigits: 0,
+});
+
 $(document).ready(function() {
+
 	$("#btn_cari").click(function() {
         $("#btn_bayar,#btn_cetak,#btn_cetak2,#btn_cetak3").attr('disabled', 'disabled');
                         
@@ -21,13 +28,13 @@ $(document).ready(function() {
 						$("#lurah_wp").val(data['kelurahan_wp_sppt']);
 						$("#kota_wp").val(data['kota_wp_sppt']);
 						$("#npwp").val(data['npwp_sppt']);
-						$("#terhutang").val(data['pbb_terhutang_sppt']);
-						$("#pengurangan").val(data['faktor_pengurang_sppt']);
-						$("#pembayaran").val(data['jml_sppt_yg_dibayar']);
-						$("#sisa").val(data['sisa']);
+						$("#terhutang").val(formatter.format(data['pbb_terhutang_sppt']));
+						$("#pengurangan").val(formatter.format(data['faktor_pengurang_sppt']));
+						$("#pembayaran").val(formatter.format(data['jml_sppt_yg_dibayar']));
+						$("#sisa").val(formatter.format(data['sisa']));
 						$("#jthtempo").val(data['tgl_jatuh_tempo_sppt']);
-						$("#denda").val(data['denda']);
-						$("#utang").val(data['utang']);
+						$("#denda").val(formatter.format(data['denda']));
+						$("#utang").val(formatter.format(data['utang']));
 						$("#terbilang").val(data['terbilang']);
 						if (data['utang']>0)
 						    $("#btn_bayar").removeAttr('disabled');

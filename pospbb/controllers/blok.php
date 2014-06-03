@@ -62,7 +62,7 @@ class blok extends CI_Controller
 
         $blok = $this->uri->segment(4);
         $thn  = $this->uri->segment(5);
-
+        
         if ($blok && $thn && $result = $this->sppt_model->get_by_blok_thn($blok, $thn)) {
             $output = array(
                 'found' => 1,
@@ -160,6 +160,7 @@ class blok extends CI_Controller
         $nop = str_replace('.', '', $nop);
         $nop = str_replace(' ', '', $nop);
         $nop = str_replace('-', '', $nop);
+        $nop = preg_replace( '/[^0-9]/', '', $nop);
 
         $thn = $this->input->post('tahun');
 
@@ -208,7 +209,8 @@ class blok extends CI_Controller
                         'jml_sppt_yg_dibayar' => $jml_sppt_yg_dibayar,
                         'tgl_pembayaran_sppt' => $tgl_pembayaran_sppt,
                         'tgl_rekam_byr_sppt' => $tgl_rekam_byr_sppt,
-                        'nip_rekam_byr_sppt' => $nip_rekam_byr_sppt
+                        'nip_rekam_byr_sppt' => $nip_rekam_byr_sppt,
+                        'user_id' => $this->session->userdata('userid')
                     );
 
                     $fields = explode(',', POS_FIELD); //seuai parameter yang ada di master konfig
