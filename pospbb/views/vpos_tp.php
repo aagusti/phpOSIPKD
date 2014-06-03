@@ -19,7 +19,7 @@ $(document).ready(function() {
 		"aoColumns": [
 			{ "sWidth": "6%" },
 			{ "sWidth": "12%" },
-			{ "sWidth": "12%" },
+			{ "sWidth": "30%" },
 			null,
 		],
 		"fnRowCallback": function (nRow, aData, iDisplayIndex) {
