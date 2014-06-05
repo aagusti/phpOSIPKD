@@ -1154,7 +1154,7 @@ class loaddata extends CI_Controller {
         // $sql_query_r = "SELECT  tgl_pembayaran_sppt kode,tp.kd_kanwil||tp.kd_kantor||tp.kd_tp||':'||tp.nm_tp uraian, 
         $sql_query_r = "SELECT  tgl_pembayaran_sppt kode,{$pos_uraian}||':'||tp.nm_tp uraian,
             sum(p.jml_sppt_yg_dibayar - p.denda_sppt)  pokok, sum(p.denda_sppt) denda, 
-            sum(p.jml_sppt_yg_dibayar) bayar, u.userid
+            sum(p.jml_sppt_yg_dibayar) bayar, u.nama
             FROM sppt k 
             INNER JOIN pembayaran_sppt p 
             ON k.kd_propinsi = p.kd_propinsi
@@ -1168,8 +1168,8 @@ class loaddata extends CI_Controller {
             LEFT JOIN tempat_pembayaran tp ON {$pos_join}
             LEFT JOIN users u ON p.user_id=u.id
             $where $search 
-            GROUP BY 1,2
-            ORDER BY 1,2 ";
+            GROUP BY 1,2,6
+            ORDER BY 1,2,6 ";
         $sql_query_r .= "$sOrder $sLimit";
         
         $output = array(

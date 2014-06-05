@@ -355,7 +355,7 @@ class pospbb extends CI_Controller
         $data['tahun_sppt1'] = $tahun_sppt1;
         $data['tahun_sppt2'] = $tahun_sppt2;
         
-        $user_kd = (isset($_GET['user_kd']) ? $_GET['user_kd'] : '0');
+        $user_kd = (isset($_GET['user_kd']) ? $_GET['user_kd'] : '');
         $data['user_kd'] = $user_kd;
         $data['usertbl']    = $this->load->model('users_model')->get_all();
         
