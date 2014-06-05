@@ -80,7 +80,7 @@ class laporan extends CI_Controller
         $data['bukunm'] = buku_name($_POST['buku']);
         $data['banknm'] = isset($this->session->userdata['tpnm']) ? $this->session->userdata['tpnm'] : 'TP Tidak Valid';
         $data['user_id'] = $_POST['user'];
-        die ($data['user_id']);
+        //die ($data['user_id']);
         /*$this->tp_model->get_nama(
         $this->session->userdata('kd_kanwil'),
         $this->session->userdata('kd_kantor'),

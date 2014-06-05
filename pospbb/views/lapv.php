@@ -118,7 +118,7 @@ $(document).ready(function() {
 					<?
             foreach ($users as $fld)
 						{
-							echo "<option values='{$fld['id']}'>". $fld['nama'] ."</option>\n";
+							echo "<option value='{$fld['id']}'>". $fld['nama'] ."</option>\n";
               //echo "<option values="..">".$fld['nama']."</option>\n";
 						}
 					?>
