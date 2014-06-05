@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stts_nop_bank" language="groovy" pageWidth="612" pageHeight="396" columnWidth="556" leftMargin="28" rightMargin="28" topMargin="0" bottomMargin="0" scriptletClass="opensipkd.os.TerbilangScriptlet" uuid="52d36c4c-5959-475f-a03e-fa6c93faf7ed">
+	<property name="ireport.zoom" value="1.3636363636363635"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="join" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" ps.kd_kanwil=tp.kd_kanwil AND ps.kd_kantor=tp.kd_kantor AND  ps.kd_tp=tp.kd_tp "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="param" class="java.lang.String">
+		<defaultValueExpression><![CDATA["('36','76','052', '007', '005', '2478','0', '2014',1),('36','76','052', '007', '005', '2479','0', '2014',1)"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select ps.kd_propinsi, ps.kd_dati2, ps.kd_kecamatan, ps.kd_kelurahan, ps.kd_blok, ps.no_urut, ps.kd_jns_op, ps.thn_pajak_sppt, ps.pembayaran_sppt_ke,
+ps.tgl_pembayaran_sppt, ps.denda_sppt, ps.jml_sppt_yg_dibayar, md5(to_char(ps.tgl_pembayaran_sppt,'dmy')||ps.kd_propinsi||ps.kd_dati2||ps.kd_kecamatan||ps.kd_kelurahan||ps.kd_blok||ps.no_urut||ps.kd_jns_op||ps.thn_pajak_sppt) as md5
+,tp.kd_tp, tp.nm_tp, kec.nm_kecamatan, kel.nm_kelurahan
+,s.nm_wp_sppt, s.jln_wp_sppt, s.rt_wp_sppt, s.rw_wp_sppt, s.kelurahan_wp_sppt, s.kota_wp_sppt, s.npwp_sppt, s.pbb_terhutang_sppt,
+s.faktor_pengurang_sppt, s.pbb_yg_harus_dibayar_sppt, s.tgl_jatuh_tempo_sppt, s.tgl_jatuh_tempo_sppt, s.luas_bumi_sppt, s.luas_bng_sppt, pr.nm_propinsi, d2.nm_dati2
+from pembayaran_sppt ps
+INNER JOIN ref_kecamatan kec on ps.kd_propinsi=kec.kd_propinsi and ps.kd_dati2=kec.kd_dati2 and ps.kd_kecamatan=kec.kd_kecamatan
+INNER JOIN ref_kelurahan kel on ps.kd_propinsi=kel.kd_propinsi and ps.kd_dati2=kel.kd_dati2 and ps.kd_kecamatan=kel.kd_kecamatan and ps.kd_kelurahan=kel.kd_kelurahan
+INNER JOIN ref_propinsi pr on ps.kd_propinsi=pr.kd_propinsi
+INNER JOIN ref_dati2 d2 on ps.kd_propinsi=d2.kd_propinsi and ps.kd_dati2=d2.kd_dati2
+LEFT OUTER JOIN tempat_pembayaran tp ON $P!{join}
+INNER JOIN sppt s ON s.kd_propinsi=ps.kd_propinsi and s.kd_dati2=ps.kd_dati2 and s.kd_kecamatan=ps.kd_kecamatan and s.kd_kelurahan=ps.kd_kelurahan and s.kd_blok=ps.kd_blok and s.no_urut=ps.no_urut and s.kd_jns_op = ps.kd_jns_op and s.thn_pajak_sppt = ps.thn_pajak_sppt
+INNER JOIN (VALUES $P!{param}) as p
+     (kd_propinsi, kd_dati2, kd_kecamatan, kd_kelurahan, kd_blok,
+      no_urut, kd_jns_op, thn_pajak_sppt, pembayaran_sppt_ke)
+ ON p.kd_propinsi=ps.kd_propinsi and p.kd_dati2=ps.kd_dati2 and
+           p.kd_kecamatan=ps.kd_kecamatan and p.kd_kelurahan=ps.kd_kelurahan and
+           p.kd_blok=ps.kd_blok and p.no_urut=ps.no_urut
+           and p.kd_jns_op = ps.kd_jns_op and p.thn_pajak_sppt = ps.thn_pajak_sppt
+           and p.pembayaran_sppt_ke=ps.pembayaran_sppt_ke
+ORDER BY ps.kd_propinsi, ps.kd_dati2, ps.kd_kecamatan, ps.kd_kelurahan, ps.kd_blok, ps.no_urut, ps.kd_jns_op, ps.thn_pajak_sppt, ps.pembayaran_sppt_ke,
+ps.tgl_pembayaran_sppt]]>
+	</queryString>
+	<field name="kd_propinsi" class="java.lang.String"/>
+	<field name="kd_dati2" class="java.lang.String"/>
+	<field name="kd_kecamatan" class="java.lang.String"/>
+	<field name="kd_kelurahan" class="java.lang.String"/>
+	<field name="kd_blok" class="java.lang.String"/>
+	<field name="no_urut" class="java.lang.String"/>
+	<field name="kd_jns_op" class="java.lang.String"/>
+	<field name="thn_pajak_sppt" class="java.lang.String"/>
+	<field name="pembayaran_sppt_ke" class="java.lang.Integer"/>
+	<field name="tgl_pembayaran_sppt" class="java.sql.Date"/>
+	<field name="denda_sppt" class="java.lang.Double"/>
+	<field name="jml_sppt_yg_dibayar" class="java.lang.Double"/>
+	<field name="md5" class="java.lang.String"/>
+	<field name="kd_tp" class="java.lang.String"/>
+	<field name="nm_tp" class="java.lang.String"/>
+	<field name="nm_kecamatan" class="java.lang.String"/>
+	<field name="nm_kelurahan" class="java.lang.String"/>
+	<field name="nm_wp_sppt" class="java.lang.String"/>
+	<field name="jln_wp_sppt" class="java.lang.String"/>
+	<field name="rt_wp_sppt" class="java.lang.String"/>
+	<field name="rw_wp_sppt" class="java.lang.String"/>
+	<field name="kelurahan_wp_sppt" class="java.lang.String"/>
+	<field name="kota_wp_sppt" class="java.lang.String"/>
+	<field name="npwp_sppt" class="java.lang.String"/>
+	<field name="pbb_terhutang_sppt" class="java.lang.Double"/>
+	<field name="faktor_pengurang_sppt" class="java.lang.Double"/>
+	<field name="pbb_yg_harus_dibayar_sppt" class="java.lang.Double"/>
+	<field name="tgl_jatuh_tempo_sppt" class="java.sql.Date"/>
+	<field name="luas_bumi_sppt" class="java.lang.Double"/>
+	<field name="luas_bng_sppt" class="java.lang.Double"/>
+	<field name="nm_propinsi" class="java.lang.String"/>
+	<field name="nm_dati2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="396" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0127885e-25da-4525-8d50-7d2aae3f0cd7" x="0" y="357" width="556" height="11"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="7" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SELURUH PEMERINTAH KABUPATEN/KOTA PROPINSI "+$F{nm_propinsi}+" MENYATAKAN RESI INI SEBAGAI BUKTI PEMBAYARAN PAJAK DAERAH YANG SAH. "]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="61a4ccfd-b43c-4a8d-a22b-6febad10760b" x="143" y="272" width="67" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tgl_jatuh_tempo_sppt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d757c408-70e9-4fff-81b8-79269cc5bf20" x="143" y="202" width="154" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nm_kelurahan}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="58ee0d5d-5a24-4d42-9608-86f1f6325ef5" x="142" y="129" width="155" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kd_propinsi}+"."+$F{kd_dati2}+"."+$F{kd_kecamatan}+"."+$F{kd_kelurahan}+"."+$F{kd_blok}+"-"+$F{no_urut}+"."+$F{kd_jns_op}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="02c339da-2da9-4070-a00d-e2c27f36fcce" x="142" y="157" width="404" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nm_wp_sppt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4155b67d-67d4-4c29-af99-ff5c1c4bcc17" x="143" y="216" width="154" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nm_kecamatan}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="23eddc32-27b1-4d66-b397-ca9441c54f4d" x="143" y="143" width="154" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{thn_pajak_sppt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="86897fd8-1412-41c1-b1c6-af53ae64ccdb" x="470" y="237" width="76" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_sppt_yg_dibayar})]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="431e220a-692f-4e43-800f-2d70fe42b994" x="470" y="202" width="76" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_sppt_yg_dibayar}-$F{denda_sppt})]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="df17c2ec-cfff-4408-9c24-fb0170992bfa" x="470" y="216" width="76" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{denda_sppt})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="ee01c3ea-7a66-4a32-9a5c-ed4da5f5f422" x="142" y="101" width="81" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tgl_pembayaran_sppt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="3c72b5d6-4fb6-40be-b879-88f1cc1a2a0c" x="142" y="244" width="42" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{luas_bumi_sppt})]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="36b11183-170b-474c-a9db-eb3b675422a6" x="142" y="258" width="42" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{luas_bng_sppt})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ff9feecb-4ea0-4162-a4d4-529d314e0463" x="450" y="202" width="20" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ade35863-e473-44c6-b524-3f603f6537ae" x="450" y="216" width="20" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cd23ba2c-40e3-4353-b5de-7fb5533f1781" x="450" y="237" width="20" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d916ea0a-79b4-4ec6-b3c2-80029266e5ac" x="0" y="24" width="545" height="14"/>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SURAT TANDA TERIMA SETORAN (STTS) "+$F{nm_tp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="df7b00d6-7161-484e-9fac-eeb5372de8e3" x="0" y="46" width="546" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["BUKTI PEMBAYARAN LUNAS "+$F{nm_tp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="588e01a7-3933-4252-ad1c-e856832b3579" x="0" y="64" width="340" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PAJAK PBB-P2]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="42bf47b3-4de9-476e-a75e-de31d437124f" x="0" y="82" width="340" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["KODE TP : "+$F{kd_tp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e75663fb-6590-47aa-9655-02d69921b13a" x="0" y="101" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TANGGAL TRANSAKSI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f4dcfffb-4e3a-4ccb-ba9d-a501e260f52b" x="0" y="115" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[KOTA/KABUPATEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ca37992e-2f98-4b80-8ad2-76b4058a290c" x="0" y="143" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TAHUN PAJAK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ef5eb4a1-aa5b-42d7-ad6a-78284be37bda" x="0" y="157" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[NAMA WAJIB PAJAK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5d5b9749-0ec9-4615-a704-9211b9daafef" x="0" y="187" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[LETAK OBJEK PAJAK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e9cf6391-62e8-44b5-8d0a-9926b6bcedc3" x="0" y="272" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TANGGAL JATUH TEMPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e349f93f-9bb8-48bb-a676-753e1407c8a5" x="307" y="202" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[POKOK PAJAK PBB-P2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a6a40beb-c683-49de-9ef2-13d7e7e910c2" x="0" y="202" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[KELURAHAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2f50112a-51db-4f99-890d-06d22822d65e" x="0" y="244" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[LUAS TANAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cad4b750-bf2b-4352-9ab7-2b5fd2f80343" x="0" y="230" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PROPINSI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="175b8454-fb61-4c05-b0fe-c80309ea7039" x="307" y="187" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[URAIAN PEMBAYARAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6947af09-3e3d-4ea1-91a3-2b0bd207c8d0" x="0" y="216" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[KECAMATAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f707bf13-5ad3-4631-ab6a-bb20c0fe5ef1" x="307" y="216" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[DENDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eed4ece7-4996-406d-96ac-ec884788d66f" x="307" y="237" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[JML SETORAN PAJAK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ecf0db37-33d4-4b32-a9bb-289671c7d82f" x="307" y="257" width="62" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TERBILANG]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="88f9d127-82b8-416e-89fa-1af087666e0a" x="143" y="230" width="154" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nm_propinsi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="422778dc-0007-45a3-8b5b-d7d93c182ee4" x="131" y="101" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3b819b0b-8a63-404d-9e1b-1136d7ed363d" x="131" y="115" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a1bd890c-5907-4662-b9b1-9679278d76bb" x="131" y="143" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e22a7043-506f-4a94-815a-848858ef92fe" x="131" y="157" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2391dc7f-a8c0-4443-aac8-c693ea813f25" x="131" y="202" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3e840904-8753-4c1b-8776-56e95d908846" x="131" y="216" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="45197026-e166-4217-93d3-1ec96a2a91fc" x="131" y="230" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2f0d05c1-a322-4014-b7bc-1e174a9ed475" x="131" y="244" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c15d9b8e-2ed8-4228-92ed-09443f599d2f" x="131" y="272" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="386e6f43-f2c9-4cb7-8fc8-b37a719d4503" x="438" y="187" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f45c8d5b-b8ae-48eb-a38d-c121aeb6977f" x="438" y="202" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="222d82e3-068e-40da-abcd-65538bb163fc" x="438" y="216" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7978ac95-ee37-4dae-910b-3e323da1a1af" x="438" y="237" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="97887267-4fd1-422f-b461-cb0396bcb07f" x="369" y="257" width="6" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8612ce80-ee6a-4bc7-96d9-8018dffd3c40" x="205" y="272" width="87" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[(DD/MM/YYYY)]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="e12bbe02-0511-4e97-b2e9-4608e157a169" x="449" y="232" width="96" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="86c06e88-a0c7-4596-b7bc-f6c273853316" x="549" y="225" width="7" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d2f1ad7-1982-4a44-ac3b-e71293eb95fc" x="189" y="244" width="21" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[M2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f4f2b48f-4098-4894-8d60-858b3a9dd3bc" x="189" y="258" width="21" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[M2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7f3d6432-a01b-406c-8eb0-6afc90a8feb7" x="0" y="258" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[LUAS BANGUNAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="51803e3e-224b-4eb8-a355-b649626a8783" x="131" y="258" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aecfebf4-17f7-420a-8b84-fe4e9862aa29" x="206" y="101" width="87" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[(DD/MM/YYYY)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="12ab2173-898e-468d-b89a-29322bef0df2" x="142" y="115" width="155" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nm_dati2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ebaad099-090a-470a-8cad-902bc48c0a3b" x="307" y="341" width="188" height="15"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PETUGAS BANK]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="a7e053b4-fe55-42b3-8592-9e4a439e62e0" stretchType="RelativeToBandHeight" x="375" y="257" width="181" height="38"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORT_SCRIPTLET}.getTerbilang( $F{jml_sppt_yg_dibayar} )+" Rupiah"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b1fd434c-a21b-4850-aeab-a3e7fba77b7e" x="131" y="129" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="60fa4176-6052-482f-b569-f87e375a81c1" x="0" y="129" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[NOP]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="46fa4ef2-057d-467d-affc-9af2804472d1" x="142" y="171" width="403" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jln_wp_sppt}+" RT."+$F{rt_wp_sppt}+" RW."+$F{rw_wp_sppt}+" KEL. "+$F{kelurahan_wp_sppt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a43886e5-e020-41b2-82f1-c5b3505f232b" x="131" y="171" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83805a7e-6781-425c-b645-ac536852402e" x="0" y="171" width="131" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ALAMAT WAJIB PAJAK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f6dd91b-846d-44b4-8d87-eeee6fc16028" x="131" y="187" width="12" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8f51d33d-0fa6-471d-a186-edb52116b434" x="0" y="368" width="556" height="11"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="7" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PEMBAYARAN PAJAK DAERAH DAPAT DILAKUKAN DI SELURUH JARINGAN KANTOR BANK TERDEKAT"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="66398dd2-4099-42eb-8917-288759923f43" x="334" y="101" width="211" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{md5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="80a5bab3-1623-40c6-98a1-4b5e80629249" x="307" y="101" width="17" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[SN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d8b43859-11c1-47c3-87aa-86b6d6f5ba4a" x="324" y="101" width="10" height="14"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
