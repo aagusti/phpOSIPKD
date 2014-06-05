@@ -115,7 +115,7 @@ $(document).ready(function() {
 
             <div class="span2" style="margin-left: 5px;">
                 <label class="staticfont">&nbsp;</label>
-                <button class="btn btn-info" id="btn_cari" name="btn_cari">Cari</button>
+                <button type="button" class="btn btn-info" id="btn_cari" name="btn_cari">Cari</button>
                 <button type="button" class="btn btn-primary" id="btn_batal" name="btn_batal" disabled>Batal STTS</button>
             </div>
         </div>

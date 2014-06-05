@@ -256,8 +256,9 @@ class pbbm_model extends CI_Model
             WHERE k.kd_propinsi='" . KD_PROPINSI . "' AND k.kd_dati2='" . KD_DATI2 . "'
                   and p.thn_pajak_sppt='$tahun' 
                   AND s.pbb_yg_harus_dibayar_sppt between $bukumin AND $bukumax
-                  AND tgl_pembayaran_sppt < '$tglm' 
-                  AND p.kd_propinsi = s.kd_propinsi AND p.kd_dati2 = s.kd_dati2 AND p.kd_kecamatan = s.kd_kecamatan AND p.kd_kelurahan = s.kd_kelurahan 
+                  AND p.tgl_pembayaran_sppt < '$tglm' 
+                  AND p.kd_propinsi = s.kd_propinsi AND p.kd_dati2 = s.kd_dati2 
+                  AND p.kd_kecamatan = s.kd_kecamatan AND p.kd_kelurahan = s.kd_kelurahan 
                   AND p.kd_blok = s.kd_blok 
                   AND p.no_urut = s.no_urut AND p.kd_jns_op = s.kd_jns_op AND p.thn_pajak_sppt = s.thn_pajak_sppt 
                   AND k.kd_propinsi = s.kd_propinsi AND k.kd_dati2 = s.kd_dati2 AND k.kd_kecamatan = s.kd_kecamatan 

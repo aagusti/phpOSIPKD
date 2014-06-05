@@ -116,7 +116,7 @@ $(document).keypress(function(event){
 				
 				<div class="pull-left" style="margin-left: 5px;">
 					<label class="staticfont">&nbsp;</label>
-					<button class="btn btn-info" id="btn_cari" name="btn_cari">Cari</button>	
+					<button type="button" class="btn btn-info" id="btn_cari" name="btn_cari">Cari</button>	
                     <button type="button" class="btn btn-success" id="btn_cetak" name="btn_cetak" disabled>Cetak (Draft)</button>
                     <button type="button" class="btn btn-success" id="btn_cetak2" name="btn_cetak2" disabled>Cetak (PDF)</button>
                     <button type="button" class="btn btn-success" id="btn_cetak3" name="btn_cetak3" disabled>Cetak (BANK)</button>
