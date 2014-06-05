@@ -156,6 +156,7 @@ class laporan extends CI_Controller
         if ($uid != '') {
             $where .= " and a.user_id=" . $uid;
         }
+        die($where);
                  
         $order = "";
         if ($urut == 1)
@@ -167,7 +168,7 @@ class laporan extends CI_Controller
         else
             $order = " order by  a.jml_sppt_yg_dibayar";
         
-        die($where);
+        
         $params = array(
             "daerah" => LICENSE_TO,
             "dinas" => LICENSE_TO_SUB,
