@@ -21,7 +21,7 @@ class trans_rpt extends CI_Controller {
 		$cls_mtd_pdf  = $this->router->fetch_class()."/cetak/pdf/";
 		$data['rpt_html'] = active_module_url($cls_mtd_html. $_SERVER['QUERY_STRING']);;
 		$data['rpt_pdf']  = active_module_url($cls_mtd_pdf . $_SERVER['QUERY_STRING']);;
-        $this->load->view('vjasper_viewer', $data);
+    $this->load->view('vjasper_viewer', $data);
 	}
 	
 	function cetak() {
@@ -37,7 +37,7 @@ class trans_rpt extends CI_Controller {
         $kd_tp='';
         
         $type = $this->uri->segment(4);
-		$jenis = $this->uri->segment(5);
+        $jenis = $this->uri->segment(5);
 
         $kec_kd = $this->uri->segment(6);
         $kel_kd = $this->uri->segment(7);

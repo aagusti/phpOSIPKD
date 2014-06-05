@@ -39,6 +39,18 @@ $(document).ready(function() {
 				</div>
 			</div>
 			<div class="control-group">
+				<label class="control-label">Jabatan</label>
+				<div class="controls">
+					<input class="input-xlarge" type="text" name="jabatan" value="<?=$dt['jabatan']?>">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">NIP</label>
+				<div class="controls">
+					<input class="input-xlarge" type="text" name="nip" value="<?=$dt['nip']?>">&nbsp;diisi sesuai nip sismiop
+				</div>
+			</div>
+			<div class="control-group">
 				<label class="control-label">Password</label>
 				<div class="controls">
 					<input class="input-xlarge" type="password" name="passwd" value="<?=$dt['passwd']?>">

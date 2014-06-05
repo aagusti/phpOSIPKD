@@ -150,8 +150,17 @@ $(document).ready(function() {
                 User
                 <select id="user_kd" name="user_kd">
                 <?php
+                
                     echo "<option value=\"\">Semua User</option>\n";
-                    echo "<option value=\"0\">User H2H</option>\n";
+
+                    if ($user_kd == "0") $selected="selected";
+                    else $selected="";
+                    echo "<option value=\"0\" $selected>User H2H</option>\n";
+
+                    if ($user_kd == "1") $selected="selected";
+                    else $selected="";
+                    echo "<option value=\"-1\" $selected>User POSPBB</option>\n";
+
                     foreach ($usertbl as $row)  {
                         $selected='';
                         if ($row->id==$user_kd) $selected=" selected";

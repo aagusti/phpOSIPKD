@@ -907,10 +907,11 @@ class loaddata extends CI_Controller {
         $pos_uraian = substr($pos_uraian, 0, -2);
         
         $user_kd = (isset($_GET['user_kd'])) ? $_GET['user_kd'] : '';
-        if ($user_kd != "")
+        if ($user_kd != ""){
             if ($user_kd=="0") $where .= " AND p.user_id is null";
+            elseif ($user_kd=="-1") $where .= " AND p.user_id is not null";
             else $where .= " AND p.user_id = {$user_kd}";
-            
+        }    
         $sql_query_r = "SELECT  
             k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op ||' '|| k.thn_pajak_sppt kode, 
             k.nm_wp_sppt uraian, {$pos_uraian}||':'||tp.nm_tp nm_tp, p.thn_pajak_sppt,
@@ -1136,11 +1137,11 @@ class loaddata extends CI_Controller {
         
         $user_kd = (isset($_GET['user_kd'])) ? $_GET['user_kd'] : "";
         if ($user_kd != ""){
-            if ($user_kd == "0") $where .= " AND user_id is null";
-            else $where .= " AND user_id = {$user_kd}";
-            
+            if ($user_kd=="0") $where .= " AND p.user_id is null";
+            elseif ($user_kd=="-1") $where .= " AND p.user_id is not null";
+            else $where .= " AND p.user_id = {$user_kd}";
         }
-            $iFiltered = $iTotal;
+        $iFiltered = $iTotal;
         
         
         /*

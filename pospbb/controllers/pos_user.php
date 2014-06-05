@@ -47,6 +47,8 @@ class pos_user extends CI_Controller {
 				$responce->aaData[$i][]=$row->id;
 				$responce->aaData[$i][]=$row->userid;
 				$responce->aaData[$i][]=$row->nama;
+				$responce->aaData[$i][]=$row->nip;
+				$responce->aaData[$i][]=$row->jabatan;
 				$responce->aaData[$i][]=$row->nm_tp;
 				$responce->aaData[$i][]=$row->alamat_tp;
 				$i++;
@@ -64,6 +66,7 @@ class pos_user extends CI_Controller {
 	private function fvalidation() {
 		$this->form_validation->set_error_delimiters('<span>', '</span>');
 		$this->form_validation->set_rules('userid', 'userid', 'trim|required|min_length[1]');
+		$this->form_validation->set_rules('nip', 'NIP', 'trim|required|min_length[1]');
 		$this->form_validation->set_rules('nama', 'Uraian', 'trim|required');
 		$this->form_validation->set_rules('passwd', 'Password', 'trim|required');
 		$this->form_validation->set_rules('tp', 'Tempat Pembayaran', 'trim|required');
@@ -110,10 +113,10 @@ class pos_user extends CI_Controller {
 				'userid' => $this->input->post('userid'),
 				'nama' => $this->input->post('nama'),
 				'passwd' => $this->input->post('passwd'),
-				'nip' => "-",
-				'jabatan' => "-",
+				'nip' => $this->input->post('nip'),
+				'jabatan' => $this->input->post('jabatan'),
 				'disabled' => $this->input->post('disabled') ? 1 : 0,
-				'created' => date('Y-m-d')
+				'updated' => date('Y-m-d')
 			);
 			if($user_id = $this->pos_user_model->save($data)) {
                 // masukin ke group pospbb - kalo ada hmmmmm
@@ -130,10 +133,12 @@ class pos_user extends CI_Controller {
                 $tp = explode('|',$this->input->post('tp'));
                 $fields = explode(',', $this->pos_field());
                 $data = array(); $i=0;
+                
                 foreach ($fields as $f) {
                     $data[$f] = $tp[$i];
                     $i++;
                 }
+                
                 $data['user_id'] = $user_id;
                 $this->db->insert('user_pbb',$data);
             }
@@ -155,6 +160,8 @@ class pos_user extends CI_Controller {
 			$data['dt']['userid'] = $get->userid;
 			$data['dt']['nama'] = $get->nama;
 			$data['dt']['passwd'] = $get->passwd;
+			$data['dt']['nip'] = $get->nip;
+			$data['dt']['jabatan'] = $get->jabatan;
 			$data['dt']['disabled'] = $get->disabled ? 'checked' : '';
 
             $select_data  = $this->tp_model->get_all();
