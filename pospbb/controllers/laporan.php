@@ -166,7 +166,8 @@ class laporan extends CI_Controller
             $order = " order by  a.thn_pajak_sppt";
         else
             $order = " order by  a.jml_sppt_yg_dibayar";
-            
+        
+        die($where);
         $params = array(
             "daerah" => LICENSE_TO,
             "dinas" => LICENSE_TO_SUB,
