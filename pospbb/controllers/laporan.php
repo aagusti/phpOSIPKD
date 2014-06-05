@@ -152,11 +152,11 @@ class laporan extends CI_Controller
             $where .= " and a.kd_kecamatan='" . substr($kel, 0, 3) . "' and a.kd_kelurahan='" . substr($kel, -3) . "' ";
         }
 
-        $uid = $_POST['user'];
+        $uid = $_GET['user'];
+        
         if ($uid != '') {
             $where .= " and a.user_id=" . $uid;
         }
-        die($where);
                  
         $order = "";
         if ($urut == 1)
