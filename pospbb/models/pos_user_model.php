@@ -119,11 +119,11 @@ class pos_user_model extends CI_Model {
     if ($row->num_rows()>0){
         $result=$row->row();
       foreach ($fields as $f) {
-          if ($f == 'kd_kanwil_bank')
+          /*if ($f == 'kd_kanwil_bank')
               $fs = 'kd_kanwil';
           elseif ($f == 'kd_kppbb_bank')
               $fs = 'kd_kppbb';
-          
+          */
           $fs = $f;
               
           $pos .= "up.{$fs}='{$result->$fs}' and ";
