@@ -112,6 +112,20 @@ $(document).ready(function() {
 			</div>
 			
 			<div class="row">
+				<span class="span2">User</span>
+				<select id="user" name="user">
+					<option value="" selected>SELURUH USER</option>
+					<?
+            foreach ($users as $fld)
+						{
+							echo "<option values='{$fld['id']}'>". $fld['nama'] ."</option>\n";
+              //echo "<option values="..">".$fld['nama']."</option>\n";
+						}
+					?>
+				</select>
+			</div>
+
+			<div class="row">
 				<span class="span2">&nbsp;</span>
                 <button type="button" class="btn btn-success" id="btn_cetak" name="btn_cetak">Cetak (Draft)</button>
                 <button type="button" class="btn btn-success" id="btn_cetak2" name="btn_cetak2">Cetak (PDF)</button>

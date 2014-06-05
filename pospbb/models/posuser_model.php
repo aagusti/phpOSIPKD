@@ -34,6 +34,7 @@ class posuser_model extends CI_Model
             
             if ($row = $this->db->query("SELECT * FROM tempat_pembayaran WHERE (1=1) $where")->row()) {
                 $this->session->set_userdata('tpnm', $row->nm_tp);
+                
                 $this->session->set_userdata('tpkd', $userbank);
             } else
                 return false;

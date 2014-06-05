@@ -30,13 +30,14 @@ class laporan extends CI_Controller
         $this->load->model(array(
             'pbb/refkelurahan_model',
             'pbb/tp_model',
-            'rpt_model'
+            'rpt_model',
+            'pos_user_model'
         ));
     }
 
     public function index()
     {
-        if (!$this->module_auth->read) {
+       if (!$this->module_auth->read) {
             $this->session->set_flashdata('msg_warning', $this->module_auth->msg_read);
             redirect('info');
         }
@@ -46,8 +47,8 @@ class laporan extends CI_Controller
         $data['current'] = 'laporan';
         $data['keldata'] = $r = $this->refkelurahan_model->get_array();
         $data['tpnm']    = isset($this->session->userdata['tpnm']) ? $this->session->userdata['tpnm'] : '';
-
-
+        $data['users']   =  $this->pos_user_model->get_tp_user();
+        //print_r($data['users']);
         $this->fvalidation();
         $this->load->view('lapv', $data);
     }
@@ -78,6 +79,7 @@ class laporan extends CI_Controller
         $data['kelnm']  = $_POST['kel'];
         $data['bukunm'] = buku_name($_POST['buku']);
         $data['banknm'] = isset($this->session->userdata['tpnm']) ? $this->session->userdata['tpnm'] : 'TP Tidak Valid';
+        $data['user_id'] = $_POST['user'];
         /*$this->tp_model->get_nama(
         $this->session->userdata('kd_kanwil'),
         $this->session->userdata('kd_kantor'),
@@ -149,6 +151,11 @@ class laporan extends CI_Controller
             $where .= " and a.kd_kecamatan='" . substr($kel, 0, 3) . "' and a.kd_kelurahan='" . substr($kel, -3) . "' ";
         }
 
+        $uid = $_POST['user'];
+        if ($uid != '') {
+            $where .= " and a.user_id=" . $uid;
+        }
+                 
         $order = "";
         if ($urut == 1)
             $order = " order by  b.nm_wp_sppt";

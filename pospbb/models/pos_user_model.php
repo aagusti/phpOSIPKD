@@ -22,6 +22,21 @@ class pos_user_model extends CI_Model {
         $pos_join = substr($pos_join, 0, -4);
         return $pos_join;
     }
+    function pos_where() {
+        $fields     = explode(',', POS_FIELD);
+        $pos_join   = ''; $fs='';
+        foreach ($fields as $f) {
+            $fs = $f;
+            if ($f == 'kd_kanwil_bank')
+                $fs = 'kd_kanwil';
+            else if ($f == 'kd_kppbb_bank')
+                $fs = 'kd_kppbb';
+                
+            $pos_join .= "up.{$fs}||";
+        }
+        $a = substr($pos_join, 0, -2)."$session()";
+        return $pos_join;
+    }
     
 	function get_all() {
         $sql = "select u.*,tp.nm_tp
@@ -94,6 +109,50 @@ class pos_user_model extends CI_Model {
         else
             return false;
 	}
+  
+	function get_tp_user() {
+  
+    $fields     = explode(',', POS_FIELD);
+    $pos   = '';  $fs='';
+    $sql =  "SELECT * FROM user_pbb WHERE user_id=".$this->session->userdata('userid'); ;
+    $row=$this->db->query($sql);
+    if ($row->num_rows()>0){
+        $result=$row->row();
+      foreach ($fields as $f) {
+          if ($f == 'kd_kanwil_bank')
+              $fs = 'kd_kanwil';
+          elseif ($f == 'kd_kppbb_bank')
+              $fs = 'kd_kppbb';
+          
+          $fs = $f;
+              
+          $pos .= "up.{$fs}='{$result->$fs}' and ";
+      }
+    
+      $pos = substr($pos, 0, -4);
+    
+        $sql = "select u.id, u.nama
+				from users as u
+                inner join user_pbb up on up.user_id=u.id
+        where         
+             {$pos}
+				order by u.nama";
+		
+     
+    
+        $this->db->trans_start();
+        
+        $query = $this->db->query($sql);
+        $this->db->trans_complete();
+        
+        if($this->db->trans_status() && $query->num_rows()>0)
+            return $query->result_array();
+        else
+            return false;
+    }
+    return false;
+  }
+  
 }
 
 /* End of file _model.php */

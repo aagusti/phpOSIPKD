@@ -41,11 +41,18 @@ class rpt_model extends CI_Model
 		             and a.kd_kelurahan='" . substr($kel, -3) . "'";
         }
         
+        $uid = $_POST['user'];
+        if ($uid != '') {
+            $where .= " and a.user_id=" . $uid;
+        }
+         
+        
         $fields = explode(',', POS_FIELD);
         //$fs= $this->session->userdata('pos_field') ;
         foreach ($fields as $f) {
             $where .= " and a.$f='" . $this->session->userdata($f) . "' ";
         }
+
         
         $sql   = "select a.kd_propinsi, a.kd_dati2, a.kd_kecamatan, a.kd_kelurahan,
 					a.kd_blok, a.no_urut, a.kd_jns_op, a.thn_pajak_sppt, a.pembayaran_sppt_ke,
@@ -101,7 +108,11 @@ class rpt_model extends CI_Model
             $where .= " and a.kd_kecamatan='" . substr($kel, 0, 3) . "' 
 		             and a.kd_kelurahan='" . substr($kel, -3) . "'";
         }
-        
+        $uid = $_POST['user'];
+        if ($uid != '') {
+            $where .= " and a.user_id=" . $uid;
+        }
+                 
         $fields = explode(',', POS_FIELD);
         foreach ($fields as $f) {
             $where .= " and a.$f='" . $this->session->userdata($f) . "' ";
