@@ -31,6 +31,8 @@ $(document).ready(function() {
             { sWidth: '6%', sClass: "center" },
             null,
             <? endif; ?>
+            { sWidth: '10%', sClass: "right" },
+            
         ],
         
         "aoColumnDefs": [ 
