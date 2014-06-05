@@ -808,6 +808,7 @@ class loaddata extends CI_Controller {
             'bayar',
             'tanggal',
             'nm_tp',
+            'nama',
         );
         $sIndexColumn = "kode";
         
@@ -915,7 +916,8 @@ class loaddata extends CI_Controller {
         $sql_query_r = "SELECT  
             k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op ||' '|| k.thn_pajak_sppt kode, 
             k.nm_wp_sppt uraian, {$pos_uraian}||':'||tp.nm_tp nm_tp, p.thn_pajak_sppt,
-            (p.jml_sppt_yg_dibayar - p.denda_sppt) pokok, p.denda_sppt denda, p.jml_sppt_yg_dibayar bayar, to_char(p.tgl_pembayaran_sppt,'dd-mm-yyyy') tanggal
+            (p.jml_sppt_yg_dibayar - p.denda_sppt) pokok, p.denda_sppt denda, p.jml_sppt_yg_dibayar bayar, to_char(p.tgl_pembayaran_sppt,'dd-mm-yyyy') tanggal,
+            u.nama
             FROM sppt k 
             INNER JOIN pembayaran_sppt p 
             ON k.kd_propinsi = p.kd_propinsi
@@ -927,7 +929,8 @@ class loaddata extends CI_Controller {
             AND k.kd_jns_op = p.kd_jns_op 
             AND k.thn_pajak_sppt = p.thn_pajak_sppt 
             LEFT JOIN tempat_pembayaran tp ON {$pos_join}
-            $where $search 
+            LEFT JOIN users u ON p.user_id=u.id
+           $where $search 
             ORDER BY 1,2,3 ";
         
         $sql_query_r .= "$sOrder $sLimit";
@@ -1033,7 +1036,8 @@ class loaddata extends CI_Controller {
             'uraian',
             'pokok',
             'denda',
-            'bayar'
+            'bayar',
+            'nama'
         );
         $sIndexColumn = "kode";
         
@@ -1150,7 +1154,7 @@ class loaddata extends CI_Controller {
         // $sql_query_r = "SELECT  tgl_pembayaran_sppt kode,tp.kd_kanwil||tp.kd_kantor||tp.kd_tp||':'||tp.nm_tp uraian, 
         $sql_query_r = "SELECT  tgl_pembayaran_sppt kode,{$pos_uraian}||':'||tp.nm_tp uraian,
             sum(p.jml_sppt_yg_dibayar - p.denda_sppt)  pokok, sum(p.denda_sppt) denda, 
-            sum(p.jml_sppt_yg_dibayar) bayar
+            sum(p.jml_sppt_yg_dibayar) bayar, u.userid
             FROM sppt k 
             INNER JOIN pembayaran_sppt p 
             ON k.kd_propinsi = p.kd_propinsi
@@ -1162,6 +1166,7 @@ class loaddata extends CI_Controller {
             AND k.kd_jns_op = p.kd_jns_op 
             AND k.thn_pajak_sppt = p.thn_pajak_sppt 
             LEFT JOIN tempat_pembayaran tp ON {$pos_join}
+            LEFT JOIN users u ON p.user_id=u.id
             $where $search 
             GROUP BY 1,2
             ORDER BY 1,2 ";
@@ -1182,6 +1187,7 @@ class loaddata extends CI_Controller {
         $pg_total = 0;
         
         $qry = $this->db->query($sql_query_r);
+        
         foreach ($qry->result() as $aRow) {
             $row = array();
             for ($i = 0; $i < count($aColumns); $i++) {
@@ -1199,6 +1205,7 @@ class loaddata extends CI_Controller {
             
             $output['aaData'][] = $row;
         }
+        
         $output['pokok'] = number_format($pg_pokok, 0, ',', '.');
         $output['denda'] = number_format($pg_denda, 0, ',', '.');
         $output['total'] = number_format($pg_total, 0, ',', '.');

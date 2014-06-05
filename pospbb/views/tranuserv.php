@@ -157,7 +157,7 @@ $(document).ready(function() {
                     else $selected="";
                     echo "<option value=\"0\" $selected>User H2H</option>\n";
 
-                    if ($user_kd == "1") $selected="selected";
+                    if ($user_kd == "-1") $selected="selected";
                     else $selected="";
                     echo "<option value=\"-1\" $selected>User POSPBB</option>\n";
 
@@ -222,6 +222,7 @@ $(document).ready(function() {
                       <th>Tanggal</th>
                       <th>Tempat Pembayaran</th>
                     <? endif; ?>
+                    <th>User</th>
                 </tr>
             </thead>
             <tbody>
@@ -236,6 +237,7 @@ $(document).ready(function() {
                     <td></td>
                     <td></td>
                     <? endif; ?>
+                    <td></td>
                 </tr>
             </tbody>
             <tfoot>
@@ -248,6 +250,7 @@ $(document).ready(function() {
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <? endif; ?>
+                    <td></td>
                 </tr>
             </tfoot>
         </table>
