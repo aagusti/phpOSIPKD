@@ -84,7 +84,7 @@ $(document).ready(function() {
             bar.width(percentVal)
             percent.html(percentVal);
             
-            oTable.fnReloadAjax('<? echo base_url('dtsrc.xxx'); ?>');
+            oTable.fnReloadAjax('<? echo base_url('assets/dokumen/dtsrc.xxx'); ?>');
             $("#btn_simpan").removeAttr('disabled');
             alert(response);
         },

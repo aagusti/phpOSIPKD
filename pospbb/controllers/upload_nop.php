@@ -171,8 +171,7 @@ class upload_nop extends CI_Controller
 				// }
 
                 //tulis kosong dulu
-                $file = 'dtsrc.xxx';
-                die('X');
+                $file = 'assets/dokumen/dtsrc.xxx';
                 $dtfile = fopen($file,"w");
                 echo fwrite($dtfile,'');
                 @fclose($dtfile);
@@ -180,7 +179,6 @@ class upload_nop extends CI_Controller
                 $adata = array();
                 $file = $uploadinfo[0]['full_path'];
                 $myfile = fopen($file, "r") or die("Unable to open file!");
-                die('X');
                 while(!feof($myfile)) {
                     // echo fgets($myfile) . "<br>";
 
@@ -225,7 +223,7 @@ class upload_nop extends CI_Controller
                 @fclose($myfile);
                 $aadata["aaData"] = $adata;
 
-                $file = 'dtsrc.xxx';
+                $file = 'assets/dokumen/dtsrc.xxx';
                 $dtfile = fopen($file,"w");
                 echo fwrite($dtfile,json_encode($aadata));
                 @fclose($dtfile);
