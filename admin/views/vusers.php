@@ -7,7 +7,7 @@ var oTable;
 
 $(document).ready(function() {
 	oTable = $('#table1').dataTable({
-		/* "sScrollY": "380px", */
+		"sScrollY": "380px",
 		"bScrollCollapse": true,
 		"bPaginate": false,
 		"bJQueryUI": true,
@@ -18,11 +18,11 @@ $(document).ready(function() {
 		],
 		"aoColumns": [
 			null,
-			{ "sWidth": "20%" },
+			{ "sWidth": "12%" },
 			null,
-			{ "sWidth": "10%" },
+			{ "sWidth": "16%" },
 			{ "sWidth": "8%" , "sClass": "center"},
-			{ "sWidth": "10%" },
+			{ "sWidth": "8%" },
 		],
 		"fnRowCallback": function (nRow, aData, iDisplayIndex) {
 			$(nRow).on("click", function (event) {
@@ -83,7 +83,7 @@ function update_unit(id, a) {
 function disable_user(id, a) {
 	var val = Number(a);
 	$.ajax({
-	  url: '<?php echo active_module_url()?>users/update_stat/' + id + '/' + val,
+	  url: '<?php echo active_module_url()?>users/disable_user/' + id + '/' + val,
 	  success: function(data) {
 		/*  */
 	  }
@@ -107,7 +107,7 @@ function disable_user(id, a) {
 					<th>Index</th>
 					<th>User ID</th>
 					<th>Nama</th>
-					<th>NIP</th>
+					<th>Jabatan</th>
 					<th>Disabled</th>
 					<th>Tgl. Input</th>
 				</tr>

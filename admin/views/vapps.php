@@ -7,7 +7,7 @@ var oTable;
 
 $(document).ready(function() {
 	oTable = $('#table1').dataTable({
-		/* "sScrollY": "380px", */
+		"sScrollY": "380px",
 		/* "iDisplayLength": 100, */
 		"bScrollCollapse": true,
 		"bJQueryUI": true,

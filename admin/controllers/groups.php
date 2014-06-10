@@ -130,6 +130,8 @@ class groups extends CI_Controller {
 		}
 		
 		if($id && $this->groups_model->get($id)) {
+            $this->db->delete('group_modules',array('group_id' => $id));
+            
 			$this->groups_model->delete($id);
 			$this->session->set_flashdata('msg_success', 'Data telah dihapus');
 			redirect(active_module_url('groups'));

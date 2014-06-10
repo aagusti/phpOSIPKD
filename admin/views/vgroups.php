@@ -9,7 +9,7 @@ var oTable2;
 
 $(document).ready(function() {
 	oTable = $('#table1').dataTable({
-		/* "sScrollY": "380px", */
+		"sScrollY": "380px",
 		"bScrollCollapse": true,
 		"bPaginate": false,
 		"bJQueryUI": true,
@@ -57,7 +57,7 @@ $(document).ready(function() {
 	});
 
 	oTable2 = $('#table2').dataTable({
-		/* "sScrollY": "380px", */
+		"sScrollY": "380px",
 		"bScrollCollapse": true,
 		"bPaginate": false,
 		"bJQueryUI": true,
