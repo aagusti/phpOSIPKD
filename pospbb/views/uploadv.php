@@ -66,7 +66,7 @@ $(document).ready(function() {
     // ---- 
     $('#myform').ajaxForm({
         beforeSend: function() {
-            $("#btn_simpan,#btn_cetak, #btn_cetak2, #btn_cetak5,#btn_cetak3,#btn_cetak4").attr('disabled', 'disabled');
+            $("#btn_simpan,#btn_cetak,#btn_cetak6, #btn_cetak2, #btn_cetak5,#btn_cetak3,#btn_cetak4").attr('disabled', 'disabled');
             
             status.empty();
             var percentVal = '0%';
@@ -109,7 +109,7 @@ $(document).ready(function() {
                 if (data['simpan']!='gagal') {
                     saved = data['saved'];
                     $('#data').val(JSON.stringify(saved));
-                    $("#btn_cetak,#btn_cetak2,#btn_cetak5,#btn_cetak3,#btn_cetak4").removeAttr('disabled');
+                    $("#btn_cetak,#btn_cetak6,#btn_cetak2,#btn_cetak5,#btn_cetak3,#btn_cetak4").removeAttr('disabled');
                     alert('Data telah disimpan.');
                 } else
                     alert('Data gagal disimpan.');
@@ -137,6 +137,24 @@ $(document).ready(function() {
             }
         });
         $(this).attr('disabled', 'disabled');
+	});
+    
+	$('#btn_cetak6').click(function() {
+        $.ajax({
+            url: "<?=active_module_url('upload_nop/cetak_bank_text')?>",
+            type: "POST",
+            data: "data=" + JSON.stringify(saved),
+            success: function (msg) {
+                if(msg!='No Data') {
+                    var rpt = window.open("", "Cetak");
+                    if (!rpt) 
+                        alert('You have a popup blocker enabled. Please allow popups for this site.');
+                    else 
+                        $(rpt.document.body).html(msg);
+                } else alert(msg);
+            }
+        });
+        // $(this).attr('disabled', 'disabled');
 	});
     
 	$('#btn_cetak5').click(function() {
@@ -204,6 +222,7 @@ $(document).keypress(function(event){
             <button type="button" class="btn btn-success" id="btn_cetak3" name="btn_cetak3" disabled>Cetak 2 (PDF)</button>	
             <button type="button" class="btn btn-success" id="btn_cetak4" name="btn_cetak4" disabled>Cetak 3 (PDF)</button>	
             <button type="button" class="btn btn-success" id="btn_cetak5" name="btn_cetak5" disabled>Cetak (Bank)</button>	
+            <button type="button" class="btn btn-success" id="btn_cetak6" name="btn_cetak6" disabled>Cetak (Bank Text)</button>	
 		</div>
         
 		<div class="asdx">

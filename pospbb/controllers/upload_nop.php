@@ -139,8 +139,6 @@ class upload_nop extends CI_Controller
     }
 
 	function unggah() { //upload
-		//$this->load->library('upload');
-
 		if (!empty($_FILES['userfile']['name'])) {
 			$this->load->library('upload');
 
@@ -155,26 +153,22 @@ class upload_nop extends CI_Controller
 				$config['file_name'] = $fn;
 			}
 
-			$config['upload_path'] = dirname(__FILE__) . ('/../dokumen/');
+			// $config['upload_path'] = dirname(__FILE__) . ('/../dokumen/');
+			$config['upload_path'] = 'assets/dokumen/';
       
-
-      $config['overwrite'] = TRUE;
-			$config['encrypt_name'] = TRUE;
-			$config['remove_spaces'] = TRUE;
-			$config['max_size']  = 1024 * 5;
-			$config['allowed_types'] = '*';
-      $this->upload->initialize($config);
-      if ($this->upload->do_multi_upload("userfile")) {
+            $config['overwrite'] = TRUE;
+            $config['encrypt_name'] = TRUE;
+            $config['remove_spaces'] = TRUE;
+            $config['max_size']  = 1024 * 5;
+            $config['allowed_types'] = '*';
+            $this->upload->initialize($config);
+            
+            if ($this->upload->do_multi_upload("userfile")) {
 				$uploadinfo = $this->upload->get_multi_upload_data();
 				// foreach ($uploadinfo as $file) { // loop over the upload data
 					// $this->email->attach($file['full_path']); // attach the full path as an email attachments :D
 				// }
 
-                //tulis kosong dulu
-                $file = 'assets/dokumen/dtsrc.xxx';
-                $dtfile = fopen($file,"w");
-                echo fwrite($dtfile,'');
-                @fclose($dtfile);
                 $param = '';
                 $adata = array();
                 $file = $uploadinfo[0]['full_path'];
@@ -316,6 +310,63 @@ class upload_nop extends CI_Controller
                     $rpt .= str_repeat('&nbsp;',25).number_format($q->jml_sppt_yg_dibayar,0,',','.')."&nbsp;\n";
                     $rpt .= str_repeat('&nbsp;',25).date('d/m/Y',strtotime($q->tgl_pembayaran_sppt))."&nbsp;\n";
                     $rpt .= str_repeat('&nbsp;',25).number_format($q->jml_sppt_yg_dibayar,0,',','.')."&nbsp;\n";
+                }
+            }
+            $rpt .= "</pre></font></body></html>";
+
+            echo $rpt;
+        } else echo "No Data";
+    }
+    
+    public function cetak_bank_text() {
+        $rpt = '';
+        $data = $_POST['data'];
+        $data = json_decode($data, true);
+
+        if ($data!=null){
+            $rpt .= "<html><head></head><body><pre>";
+
+            foreach ($data as $d)
+            {
+                if($q = $this->payment_model->get_by_nop_thn_ke($d['nop'], $d['thn'],$d['ke'])) {
+                
+                    $rpt .= str_repeat("&nbsp;", 2) . str_pad("SURAT TANDA TERIMA SETORAN (STTS) {$q->nm_tp}",110," ",STR_PAD_BOTH);
+                    $rpt .= "\n";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "BUKTI PEMBAYARAN LUNAS {$q->nm_tp}";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "PAJAK PBB-P2";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "YAU0   CABANG : ";
+                    $rpt .= "\n".str_repeat("&nbsp;",58) . str_pad("NOMOR SEQUENCE : ",16," ") . "       JAM TRANSAKSI : ".date('His',now());
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "TANGGAL TRANSAKSI   : ".date('d/m/Y',strtotime($q->tgl_pembayaran_sppt))." (DD/MM/YYYY)           NPWPD/NOP      : ".$q->kd_propinsi.$q->kd_dati2.$q->kd_kecamatan.$q->kd_kelurahan.$q->kd_blok.$q->no_urut.$q->kd_jns_op;
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "NOMOR TRANSAKSI     : ". str_pad(" ",34," ") . "NO URUT/KOHIR  : ";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "KOTA/KABUPATEN      : ".LICENSE_TO;
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "TAHUN PAJAK         : {$q->thn_pajak_sppt}";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "KODE AKUN PJK DAERAH: 41112";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "KODE AKUN PDT DENDA : 4140701";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "JENIS PP            : PK PERKOTAAN";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "NAMA WAJIB PAJAK    : {$q->nm_wp_sppt}";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "LOKASI              : {$q->jln_wp_sppt}";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "KELURAHAN           : {$q->nm_kelurahan}";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "KECAMATAN           : {$q->nm_kecamatan}";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "PROPINSI            : JAWA BARAT";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "LUAS TANAH          : ".number_format($q->luas_bumi_sppt,0,',','.')." M2      LUAS BANGUNAN : ".number_format($q->luas_bng_sppt,0,',','.')." M2";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "TANGGAL JATUH TEMPO : ".date('Y-m-d',strtotime($q->tgl_jatuh_tempo_sppt))." (YYYY-MM-DD)";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "URAIAN PEMBAYARAN   :";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "POKOK PAJAK PBB-P2  : RP.".str_pad(number_format($q->jml_sppt_yg_dibayar-$q->denda_sppt,0,',','.'),20," ",STR_PAD_LEFT);
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "DENDA               : RP.".str_pad(number_format($q->denda_sppt,0,',','.'),20," ",STR_PAD_LEFT);
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "                    ------------------------- +";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "JML SETORAN PAJAK   : RP.".str_pad(number_format($q->jml_sppt_yg_dibayar,0,',','.'),20," ",STR_PAD_LEFT);
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "TERBILANG           : ".strtoupper(terbilang($q->jml_sppt_yg_dibayar))." RUPIAH";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "                                                               ___________________________";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "                                                                       PETUGAS BANK";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "SELURUH PEMERINTAH KABUPATEN/KOTA PROVINSI JAWA BARAT DAN BANTEN MENYATAKAN RESI INI SEBAGAI";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "BUKTI PEMBAYARAN PAJAK DAERAH YANG SAH";
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "PEMBAYARAN PAJAK DAERAH DAPAT DILAKUKAN DI SELURUH JARINGAN KANTOR {$q->nm_tp} TERDEKAT";
+
+                    $rpt .= "\n";
+                    $rpt .= "\n";
+                    $rpt .= "\n";
+                    $rpt .= "\n";
+                    $rpt .= "\n";
                 }
             }
             $rpt .= "</pre></font></body></html>";
