@@ -154,11 +154,11 @@ $(document).ready(function() {
                 } else alert(msg);
             }
         });
-        // $(this).attr('disabled', 'disabled');
+        $(this).attr('disabled', 'disabled');
 	});
     
 	$('#btn_cetak5').click(function() {
-        $("#rptform").attr("action", "<?echo active_module_url('upload_nop/cetak_pdf');?>");
+        $("#rptform").attr("action", "<?echo active_module_url('upload_nop/cetak_bank');?>");
         $('#rptform').submit();
         $(this).attr('disabled', 'disabled');
 	});
@@ -222,7 +222,7 @@ $(document).keypress(function(event){
             <button type="button" class="btn btn-success" id="btn_cetak3" name="btn_cetak3" disabled>Cetak 2 (PDF)</button>	
             <button type="button" class="btn btn-success" id="btn_cetak4" name="btn_cetak4" disabled>Cetak 3 (PDF)</button>	
             <button type="button" class="btn btn-success" id="btn_cetak5" name="btn_cetak5" disabled>Cetak (Bank)</button>	
-            <button type="button" class="btn btn-success" id="btn_cetak6" name="btn_cetak6" disabled>Cetak (Bank Text)</button>	
+            <button type="button" class="btn btn-success" id="btn_cetak6" name="btn_cetak6" disabled>Cetak (Bank Draft)</button>	
 		</div>
         
 		<div class="asdx">
