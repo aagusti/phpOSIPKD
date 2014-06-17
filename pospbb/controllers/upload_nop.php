@@ -338,7 +338,7 @@ class upload_nop extends CI_Controller
                     $rpt .= "\n".str_repeat("&nbsp;", 2) . "BUKTI PEMBAYARAN LUNAS {$q->nm_tp}";
                     $rpt .= "\n".str_repeat("&nbsp;", 2) . "PAJAK PBB-P2";
                     $rpt .= "\n".str_repeat("&nbsp;", 2) . "KODE TP : {$q->kd_tp}";
-                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "TANGGAL TRANSAKSI   : ".date('d/m/Y',strtotime($q->tgl_pembayaran_sppt))." (DD/MM/YYYY)           SN : ".md5($sn);
+                    $rpt .= "\n".str_repeat("&nbsp;", 2) . "TANGGAL TRANSAKSI   : ".date('d/m/Y',strtotime($q->tgl_pembayaran_sppt))." (DD/MM/YYYY)           ";//SN : ".md5($sn);
                     $rpt .= "\n".str_repeat("&nbsp;", 2) . "KOTA/KABUPATEN      : {$q->nm_dati2}";
                     $rpt .= "\n".str_repeat("&nbsp;", 2) . "NOP                 : ".$q->kd_propinsi.$q->kd_dati2.$q->kd_kecamatan.$q->kd_kelurahan.$q->kd_blok.$q->no_urut.$q->kd_jns_op;
                     $rpt .= "\n".str_repeat("&nbsp;", 2) . "TAHUN PAJAK         : {$q->thn_pajak_sppt}";
