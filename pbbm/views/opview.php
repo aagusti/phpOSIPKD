@@ -35,7 +35,8 @@ $(document).ready(function() {
             { "sWidth": "8%", "sClass": "right" }, 
             { "sWidth": "8%", "sClass": "right" }, 
             { "sWidth": "8%", "sClass": "right" }, 
-            { "sWidth": "10%", "sClass": "right" } 
+            { "sWidth": "8%", "sClass": "right" }, 
+            { "sWidth": "8%", "sClass": "right" }, 
         ] ,
         "oTableTools": {
             "sSwfPath": "<?=base_url()?>assets/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
@@ -203,8 +204,9 @@ $(document).ready(function() {
                     <td align="right"><?=number_format ($val['luas_bng'], 0 ,  ',' , '.' );?></td>
                     <td align="right"><?=number_format ($val['njop_bng'], 0 ,  ',' , '.' );?></td>
                     <td align="right"><?=number_format ($val['ketetapan'], 0 ,  ',' , '.' );?></td>
+                    <td align="right"><?=number_format ($val['jml_denda'], 0 ,  ',' , '.' );?></td>
                     <td align="right"><?=number_format ($val['jml_bayar'], 0 ,  ',' , '.' );?></td>
-                    <td align="right"><?=number_format ($val['ketetapan']-$val['jml_bayar'], 0 ,  ',' , '.' );?></td>
+                    <td align="right"><?=number_format ($val['ketetapan']-($val['jml_bayar']-$val['jml_denda']), 0 ,  ',' , '.' );?></td>
                     <td align="right"><?=$val['tgl_bayar'];?></td>
                 </tr>
                 <?php

@@ -156,7 +156,9 @@ class pbbm_model extends CI_Model
           s.njop_bng_sppt njop_bng,
           s.pbb_yg_harus_dibayar_sppt ketetapan,
           s.status_pembayaran_sppt status_bayar,
-          sum(ps.jml_sppt_yg_dibayar-ps.denda_sppt) jml_bayar,
+          --sum(ps.jml_sppt_yg_dibayar-ps.denda_sppt) jml_bayar, --sebelum minta ditambahin kolom denda
+          sum(ps.jml_sppt_yg_dibayar) jml_bayar,
+          sum(ps.denda_sppt) jml_denda,
           to_char(max(ps.tgl_pembayaran_sppt),'dd-mm-yyyy') tgl_bayar
           
         FROM sppt s
