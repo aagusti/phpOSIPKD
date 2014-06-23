@@ -1,5 +1,5 @@
 <? $this->load->view('_head'); ?>
-<? $this->load->view('_navbar'); ?>
+<? $this->load->view(active_module().'/_navbar'); ?>
 <style type="text/css">@import "<?=base_url()?>assets/css/pbbm.css";</style>
 <script>
 $(document).ready(function() {
