@@ -121,6 +121,16 @@ $(document).ready(function() {
 		var winparams = 'location=1,status=1,scrollbars=1,resizable=no,width='+screen.width+',height='+screen.height+',menubar=no,toolbar=no,fullscreen=no';
         window.open("<?=active_module_url().'trans_rpt/cetak/pdf/'.$trantypes?>/"+ kec_kd +"/"+ kel_kd +"/"+ tahun_sppt1 +"/"+ tahun_sppt2+ "/" + buku +"/" + tglawal +"/"+ tglakhir+"/"+tp, 'Laporan', winparams);
     });
+    
+	$('#btn_csv').click(function() {
+        var rpt_type = <?=$trantypes;?>;
+        var url = '<?=active_module_url('trans_rpt/csv_rekap_harian');?>';
+        if(rpt_type==2) url = '<?=active_module_url('trans_rpt/csv_rincian_harian');?>';
+                
+        $('#myform').attr('action', url);
+        $('#myform').submit();
+        return false;
+	});
 });
 </script>
 <div class="content">
@@ -128,13 +138,14 @@ $(document).ready(function() {
         <ul class="nav nav-tabs" id="myTab">
             <li class="active"><a data-toggle="tab" href="#transaksi"><strong><? echo $this->uri->segment(3)==2 ? 'Transaksi Pembayaran - Rekap Harian' : 'Transaksi Pembayaran – Rinci Harian';?></strong></a></li>
         </ul>
-        <div class="form-horizontal">
+        <!--div class="form-horizontal"-->
+        <?php echo form_open('#',array('id'=>'myform', 'class'=>'form-horizontal'));?>
 			<div class="control-group">
 				<label class="control-label">Tanggal</label> 
 				<div class="controls">
 					<input style="width:80px;" id="tglawal" name="tglawal" width="5" type="text" value="<?if(isset($tglawal)) echo $tglawal?>"/>
 					s.d. <input style="width:80px;" id="tglakhir" name="tglakhir" type="text" value="<?if(isset($tglakhir)) echo $tglakhir?>"/>
-					<button class="btn" id="btngo" name="btngo">Go</button>
+					<button type="button" class="btn" id="btngo" name="btngo">Go</button>
 				</div>
 			</div>
         
@@ -224,10 +235,11 @@ $(document).ready(function() {
 						}
 						?>
 					</select>
-                    <button class="btn btn-success" id="btnprint">Print Format</button>
+                    <button type="button" class="btn btn-success" id="btnprint">Print Format</button>
+                    <button type="button" class="btn btn-success" id="btn_csv" name="btn_csv">Download (CSV)</button>
 				</div>
 			</div>
-        </div>
+        </form>
 		
 		<hr>
 		
