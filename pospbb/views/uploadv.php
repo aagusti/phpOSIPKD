@@ -31,6 +31,7 @@ $(document).ready(function() {
 	oTable = $('#table1').dataTable({
 		"iDisplayLength": 8,
 		"bJQueryUI" : true, 
+        "bProcessing": true,
 		"sScrollY": "325px",
 		"bScrollCollapse": false,
 		"bPaginate": false,
@@ -65,6 +66,12 @@ $(document).ready(function() {
     
     // ---- 
     $('#myform').ajaxForm({
+        beforeSubmit: function() {
+            if(!$('#userfile').val()) {
+                alert('Silahkan pilih file yang akan diupload.');
+                return false;
+            }
+        },
         beforeSend: function() {
             $("#btn_simpan,#btn_cetak,#btn_cetak6, #btn_cetak2, #btn_cetak5,#btn_cetak3,#btn_cetak4").attr('disabled', 'disabled');
             
@@ -72,6 +79,8 @@ $(document).ready(function() {
             var percentVal = '0%';
             bar.width(percentVal)
             percent.html(percentVal);
+            
+            oTable.fnClearTable();
         },
         uploadProgress: function(event, position, total, percentComplete) {
             var percentVal = percentComplete + '%';
@@ -84,9 +93,10 @@ $(document).ready(function() {
             bar.width(percentVal)
             percent.html(percentVal);
             
-            oTable.fnReloadAjax('<? echo base_url('assets/dokumen/dtsrc.xxx'); ?>');
+            oTable.fnReloadAjax('<? echo base_url('assets/dokumen/dtsrc.xxx'); ?>', function() {
+                alert(response);
+            });
             $("#btn_simpan").removeAttr('disabled');
-            alert(response);
         },
         complete: function(xhr) {
             // alert(xhr.responseText);
@@ -231,7 +241,7 @@ $(document).keypress(function(event){
                     <div class="span4">
                         <span class="staticfont">File Sumber</span>
                         <!--input class="input" type="file" name="userfile[]" multiple /-->
-                        <input class="input" type="file" name="userfile[]" />
+                        <input class="input" type="file" id="userfile" name="userfile[]" />
                         <span class="staticfont">&nbsp;</span>
                         <button type="submit" class="btn btn-info" id="btn_upload" name="btn_upload">Upload</button>
                     </div>
