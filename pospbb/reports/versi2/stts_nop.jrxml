@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="param" class="java.lang.String">
-		<defaultValueExpression><![CDATA["('36','76','052', '007', '005', '2478','0', '2014',1),('36','76','052', '007', '005', '2479','0', '2014',1)"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["('36','76','052', '007', '005', '2478','0', '2014',1),('32','03','030', '001', '001', '0205','0', '2012',1)"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="join" class="java.lang.String">
 		<defaultValueExpression><![CDATA[" ps.kd_kanwil=tp.kd_kanwil AND ps.kd_kantor=tp.kd_kantor AND ps.kd_tp=tp.kd_tp "]]></defaultValueExpression>
@@ -90,7 +90,7 @@ ps.tgl_pembayaran_sppt]]>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="d081c27d-afc6-4783-ae0b-729416506fdb" x="88" y="49" width="154" height="12"/>
 				<textElement>
-					<font fontName="SansSerif" size="9"/>
+					<font fontName="SansSerif" size="9" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nm_tp}]]></textFieldExpression>
 			</textField>

@@ -67,12 +67,18 @@ class payment_model extends CI_Model {
 		               s.kelurahan_wp_sppt, s.kota_wp_sppt, s.npwp_sppt, ps.tgl_pembayaran_sppt, ps.denda_sppt, 
 			     s.pbb_terhutang_sppt, s.faktor_pengurang_sppt, s.pbb_yg_harus_dibayar_sppt, s.tgl_jatuh_tempo_sppt,
 			     ps.denda_sppt  denda_sppt, ps.jml_sppt_yg_dibayar  jml_sppt_yg_dibayar,  kec.nm_kecamatan, kel.nm_kelurahan,
-			     s.tgl_jatuh_tempo_sppt, s.luas_bumi_sppt, s.luas_bng_sppt, $field tp.nm_tp
+			     s.tgl_jatuh_tempo_sppt, s.luas_bumi_sppt, s.luas_bng_sppt, 
+                 dt2.nm_dati2,prop.nm_propinsi,
+                 $field tp.nm_tp
 			from sppt s
 			     inner join pembayaran_sppt ps on
 			        s.kd_propinsi=ps.kd_propinsi and s.kd_dati2=ps.kd_dati2 and s.kd_kecamatan=ps.kd_kecamatan and 
 			        s.kd_kelurahan=ps.kd_kelurahan and s.kd_blok=ps.kd_blok and s.no_urut=ps.no_urut and s.kd_jns_op = ps.kd_jns_op
 			        and s.thn_pajak_sppt = ps.thn_pajak_sppt
+                    
+                inner join ref_propinsi prop on s.kd_propinsi=prop.kd_propinsi
+                inner join ref_dati2 dt2 on s.kd_propinsi=dt2.kd_propinsi and s.kd_dati2=dt2.kd_dati2
+
 			     inner join ref_kecamatan kec on
 			        s.kd_propinsi=kec.kd_propinsi and s.kd_dati2=kec.kd_dati2 and s.kd_kecamatan=kec.kd_kecamatan 
 		       inner join ref_kelurahan kel on

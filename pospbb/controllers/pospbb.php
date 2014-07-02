@@ -216,6 +216,8 @@ class pospbb extends CI_Controller
         
         $data['data_source'] = active_module_url() . "loaddata/transaksi$trantypes?buku=$buku&tahun_sppt1=$tahun_sppt1&tahun_sppt2=$tahun_sppt2&tglawal=$tglawal&tglakhir=$tglakhir&kec_kd=$kec_kd&kel_kd=$kel_kd&tp_kd=$tp_kd";
         
+        $data['tpnm']    = isset($this->session->userdata['tpnm']) ? $this->session->userdata['tpnm'] : '';
+        
         $data['current'] = 'transaksi';
         $data['apps']    = $this->apps_model->get_active_only();
         $this->load->view('transview', $data);
@@ -284,6 +286,8 @@ class pospbb extends CI_Controller
         $data['main_content'] = '';
         
         $data['data_source'] = active_module_url() . "loaddata/tranmonths?tahun=$tahun&tahun_sppt1=$tahun_sppt1&tahun_sppt2=$tahun_sppt2&buku=$buku&kec_kd=$kec_kd&kel_kd=$kel_kd&tp_kd=$tp_kd";
+        
+        $data['tpnm']    = isset($this->session->userdata['tpnm']) ? $this->session->userdata['tpnm'] : '';
         
         $data['current'] = 'transaksi';
         $data['apps']    = $this->apps_model->get_active_only();
@@ -366,6 +370,8 @@ class pospbb extends CI_Controller
         $data['main_content'] = '';
         
         $data['data_source'] = active_module_url() . "loaddata/tranuser$trantypes?buku=$buku&tahun_sppt1=$tahun_sppt1&tahun_sppt2=$tahun_sppt2&tglawal=$tglawal&tglakhir=$tglakhir&kec_kd=$kec_kd&kel_kd=$kel_kd&user_kd=$user_kd";
+        
+        $data['tpnm']    = isset($this->session->userdata['tpnm']) ? $this->session->userdata['tpnm'] : '';
         
         $data['current'] = 'transaksi';
         $data['apps']    = $this->apps_model->get_active_only();

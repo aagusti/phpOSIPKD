@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stts" language="groovy" pageWidth="348" pageHeight="907" columnWidth="348" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="52d36c4c-5959-475f-a03e-fa6c93faf7ed">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="720"/>
+	<property name="ireport.y" value="270"/>
 	<parameter name="join" class="java.lang.String">
 		<defaultValueExpression><![CDATA[" ps.kd_kanwil_bank=tp.kd_kanwil AND ps.kd_kppbb_bank=tp.kd_kppbb AND ps.kd_bank_tunggal=tp.kd_bank_tunggal AND ps.kd_bank_persepsi=tp.kd_bank_persepsi AND  ps.kd_tp=tp.kd_tp "]]></defaultValueExpression>
 	</parameter>
@@ -326,7 +326,7 @@ where s.kd_propinsi='$P!{kd_propinsi}' and s.kd_dati2='$P!{kd_dati2}' and s.kd_k
 				<textElement>
 					<font fontName="SansSerif" size="9" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_sppt_yg_dibayar}-$F{denda_sppt})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_sppt_yg_dibayar})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="245aa94a-8203-4c76-ba3f-4778c617249a" x="159" y="788" width="154" height="12"/>
@@ -340,7 +340,7 @@ where s.kd_propinsi='$P!{kd_propinsi}' and s.kd_dati2='$P!{kd_dati2}' and s.kd_k
 				<textElement>
 					<font fontName="SansSerif" size="9" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_sppt_yg_dibayar}-$F{denda_sppt})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_sppt_yg_dibayar})]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="9d74347f-8bd4-4be3-9043-669decef1ade" x="159" y="573" width="20" height="12"/>

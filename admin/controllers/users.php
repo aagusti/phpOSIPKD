@@ -22,14 +22,14 @@ class users extends CI_Controller {
 	
 	function grid() {
 		$i=0;
-        $responce="";
+        $responce = new stdClass();
         $query = $this->users_model->get_all();
 		if($query) {
 			foreach($query as $row) {
 				$responce->aaData[$i][]=$row->id;
 				$responce->aaData[$i][]=$row->userid;
 				$responce->aaData[$i][]=$row->nama;
-				$responce->aaData[$i][]=$row->nip;
+				$responce->aaData[$i][]=$row->jabatan;
 				$responce->aaData[$i][]='<input type="checkbox" onchange="disable_user('.$row->id.',this.checked);" name="disabled" '.($row->disabled?'checked':'').'>';
 				$responce->aaData[$i][]=date('d-m-Y',strtotime($row->created));
 				$i++;
@@ -49,6 +49,7 @@ class users extends CI_Controller {
 		$ingroup = $in? true : false;
 		
 		$i=0;
+        $responce = new stdClass();
 		if($id && $query = $this->users_model->get_by_group($id, $ingroup)) {
 			foreach($query as $row) {
 				$responce->aaData[$i][]=$row->id;
@@ -202,8 +203,13 @@ class users extends CI_Controller {
 	public function delete() {
 		$id = $this->uri->segment(4);
 		if($id && $this->users_model->get($id)) {
-			$this->users_model->delete($id);
-			$this->session->set_flashdata('msg_success', 'Data telah dihapus');
+            $this->db->delete('user_groups',array('user_id' => $id));
+            
+            if($this->users_model->delete($id))
+                $this->session->set_flashdata('msg_success', 'Data telah dihapus');
+            else
+                $this->session->set_flashdata('msg_error', 'Gagal');
+        
 			redirect(active_module_url('users'));
 		} else {
 			show_404();

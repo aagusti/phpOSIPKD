@@ -1,12 +1,36 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class tp_model extends CI_Model {
-
-var $tables ='tempat_pembayaran';
-
-    function __construct() {
-        parent::__construct();
-    }
-
+	private $tbl = 'tempat_pembayaran';
+	
+	function __construct() {
+		parent::__construct();
+	}
+		
+	function get_all() {
+        $this->db->trans_start();
+		$query = $this->db->get($this->tbl);
+        $this->db->trans_complete();
+        
+        if($this->db->trans_status() && $query->num_rows()>0)
+            return $query->result();
+        else
+            return false;
+	}
+	
+	function get($id)
+	{
+        $this->db->trans_start();
+		$this->db->where('id',$id);
+		$query = $this->db->get($this->tbl);
+        $this->db->trans_complete();
+        
+        if($this->db->trans_status() && $query->num_rows()>0)
+            return $query->row();
+        else
+            return false;
+	}
+	
     function get_select() {
         $fields     = explode(',', POS_FIELD);
         $pos_kode = '';
@@ -32,4 +56,42 @@ var $tables ='tempat_pembayaran';
             return FALSE;
         }
     }
+    
+	//-- admin
+	function save($data) {
+        $this->db->trans_start();
+		$this->db->insert($this->tbl,$data);
+        $this->db->trans_complete();
+            
+        if($this->db->trans_status())
+            return $this->db->insert_id();
+        else
+            return false;
+	}
+	
+	function update($id, $data) {
+        $this->db->trans_start();
+		$this->db->where('id', $id);
+		$this->db->update($this->tbl,$data);
+        $this->db->trans_complete();
+            
+        if($this->db->trans_status())
+            return true;
+        else
+            return false;
+	}
+	
+	function delete($id) {
+        $this->db->trans_start();
+        $this->db->where('id', $id);
+        $this->db->delete($this->tbl);
+        $this->db->trans_complete();
+            
+        if($this->db->trans_status())
+            return true;
+        else
+            return false;
+	}
 }
+
+/* End of file _model.php */

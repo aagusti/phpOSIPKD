@@ -19,7 +19,7 @@ class privileges extends CI_Controller {
 		$data['apps']    = $this->apps_model->get_active_only();
 
 		$select = '';
-		$rows   = $this->apps_model->get_all();
+		$rows   = $this->apps_model->get_active_only();
 		if($rows) {
 			foreach($rows as $row) {
 				if ($this->session->userdata('selected_app') == $row->id)
@@ -41,6 +41,7 @@ class privileges extends CI_Controller {
         $this->session->set_userdata('selected_app', $app_id);
 		
 		$i=0;
+        $responce = new stdClass();
 		if($app_id && $grp_id && $query = $this->privileges_model->get_by_app($app_id, $grp_id)) {
 			foreach($query as $row) {
 				$responce->aaData[$i][]=$row->module_id;

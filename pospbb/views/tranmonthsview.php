@@ -80,6 +80,13 @@ $(document).ready(function() {
         return false;
     });
   
+	$('#btn_csv').click(function() {
+        var url = '<?=active_module_url('trans_rpt/csv_rekap_bulanan');?>';
+                
+        $('#myform').attr('action', url);
+        $('#myform').submit();
+        return false;
+	});
 });
 
 function closeDialog () {
@@ -198,7 +205,8 @@ function closeDialog () {
                     }
                     ?>
                 </select> 
-                <button class="btn btn-success" id="btnprint">Print Format</button>
+                <button type="button" class="btn btn-success" id="btnprint">Print Format</button>
+                <button type="button" class="btn btn-success" id="btn_csv" name="btn_csv">Download (CSV)</button>
             </div>
         </div>
         </form>

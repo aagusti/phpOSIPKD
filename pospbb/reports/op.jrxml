@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="op" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0da6fd9c-98f6-4e0c-94d2-7bb91af684bd">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="op" language="groovy" pageWidth="671" pageHeight="842" columnWidth="631" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0da6fd9c-98f6-4e0c-94d2-7bb91af684bd">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="28"/>
 	<parameter name="kd_propinsi" class="java.lang.String">
 		<defaultValueExpression><![CDATA['32']]></defaultValueExpression>
 	</parameter>
@@ -29,7 +29,7 @@
 kec_op.nm_kecamatan kecamatan_op, dt2_op.nm_dati2, s.nm_wp_sppt, s.jln_wp_sppt||', '|| s.blok_kav_no_wp_sppt alamat_wp,
 s.rt_wp_sppt || '/' || s.rw_wp_sppt rt_rw_wp, s.kelurahan_wp_sppt kelurahan_wp, s.kota_wp_sppt kota_wp,
 s.thn_pajak_sppt, s.luas_bumi_sppt luas_tanah, s.njop_bumi_sppt njop_tanah, s.luas_bng_sppt luas_bng, s.njop_bng_sppt njop_bng,
-s.pbb_yg_harus_dibayar_sppt ketetapan, s.status_pembayaran_sppt status_bayar, sum(coalesce(ps.jml_sppt_yg_dibayar,0)-coalesce(ps.denda_sppt,0)) jml_bayar,
+s.pbb_yg_harus_dibayar_sppt ketetapan, s.status_pembayaran_sppt status_bayar, sum(coalesce(ps.jml_sppt_yg_dibayar,0)) jml_bayar, sum(coalesce(ps.denda_sppt,0)) jml_denda, sum(coalesce(s.pbb_yg_harus_dibayar_sppt,0)-(coalesce(ps.jml_sppt_yg_dibayar,0)-coalesce(ps.denda_sppt,0))) jml_sisa,
 to_char(max(ps.tgl_pembayaran_sppt),'dd-mm-yyyy') tgl_bayar
 FROM sppt s
 LEFT JOIN dat_objek_pajak dop ON dop.kd_propinsi = s.kd_propinsi AND dop.kd_dati2 = s.kd_dati2 AND dop.kd_kecamatan = s.kd_kecamatan
@@ -65,6 +65,8 @@ ORDER BY s.kd_propinsi, s.kd_dati2, s.kd_kecamatan, s.kd_kelurahan, s.kd_blok, s
 	<field name="status_bayar" class="java.lang.String"/>
 	<field name="jml_bayar" class="java.math.BigDecimal"/>
 	<field name="tgl_bayar" class="java.lang.String"/>
+	<field name="jml_denda" class="java.math.BigDecimal"/>
+	<field name="jml_sisa" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -113,7 +115,7 @@ ORDER BY s.kd_propinsi, s.kd_dati2, s.kd_kecamatan, s.kd_kelurahan, s.kd_blok, s
 				<textFieldExpression><![CDATA[": "+$F{nm_dati2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="facaa55e-a7e2-4458-89d2-6dff9509de1e" x="290" y="97" width="265" height="18"/>
+				<reportElement uuid="facaa55e-a7e2-4458-89d2-6dff9509de1e" x="338" y="97" width="265" height="18"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -162,77 +164,77 @@ ORDER BY s.kd_propinsi, s.kd_dati2, s.kd_kecamatan, s.kd_kelurahan, s.kd_blok, s
 				<textFieldExpression><![CDATA[": "+$F{alamat_op}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0996f813-6bbe-4aaa-9ebc-c8f2486e45ea" x="362" y="187" width="193" height="18"/>
+				<reportElement uuid="0996f813-6bbe-4aaa-9ebc-c8f2486e45ea" x="410" y="187" width="193" height="18"/>
 				<textElement markup="none">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": "+$F{kota_wp}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="5c8941a0-6607-4865-bf85-d70d1c012b1d" x="362" y="115" width="193" height="18"/>
+				<reportElement uuid="5c8941a0-6607-4865-bf85-d70d1c012b1d" x="410" y="115" width="193" height="18"/>
 				<textElement markup="none">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": "+$F{nm_wp_sppt}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="429611a7-6636-4055-b710-d7b3ed83a03c" x="290" y="187" width="74" height="18"/>
+				<reportElement uuid="429611a7-6636-4055-b710-d7b3ed83a03c" x="338" y="187" width="74" height="18"/>
 				<textElement>
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Kab./Kota]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4506e3d6-cda8-4472-a973-85cdb4a423ae" x="290" y="151" width="74" height="18"/>
+				<reportElement uuid="4506e3d6-cda8-4472-a973-85cdb4a423ae" x="338" y="151" width="74" height="18"/>
 				<textElement>
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[RT/RW]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="05dbe573-6a41-4123-a05d-8dce14d7ff68" x="362" y="151" width="193" height="18"/>
+				<reportElement uuid="05dbe573-6a41-4123-a05d-8dce14d7ff68" x="410" y="151" width="193" height="18"/>
 				<textElement markup="none">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": "+$F{rt_rw_wp}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="12f2cb8f-e328-4a93-b4a3-33bb1825cfe9" x="362" y="133" width="193" height="18"/>
+				<reportElement uuid="12f2cb8f-e328-4a93-b4a3-33bb1825cfe9" x="410" y="133" width="193" height="18"/>
 				<textElement markup="none">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": "+$F{alamat_wp}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e18cba25-09bb-4dc9-870d-df58a1b5255d" x="362" y="169" width="193" height="18"/>
+				<reportElement uuid="e18cba25-09bb-4dc9-870d-df58a1b5255d" x="410" y="169" width="193" height="18"/>
 				<textElement markup="none">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": "+$F{kelurahan_wp}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ee9fa0a8-849d-46e6-950d-5fab8765f6e6" x="290" y="169" width="74" height="18"/>
+				<reportElement uuid="ee9fa0a8-849d-46e6-950d-5fab8765f6e6" x="338" y="169" width="74" height="18"/>
 				<textElement>
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Kelurahan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5ba1edf0-709c-446e-91e2-ce7d3ec19964" x="290" y="115" width="74" height="18"/>
+				<reportElement uuid="5ba1edf0-709c-446e-91e2-ce7d3ec19964" x="338" y="115" width="74" height="18"/>
 				<textElement>
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nama WP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="feeb1dd8-91eb-4449-9a4d-82d12b2d72cb" x="290" y="133" width="74" height="18"/>
+				<reportElement uuid="feeb1dd8-91eb-4449-9a4d-82d12b2d72cb" x="338" y="133" width="74" height="18"/>
 				<textElement>
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Letak OP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a1ece3ee-3677-4dbc-b105-e4d91dbdf84a" x="0" y="0" width="555" height="32"/>
+				<reportElement uuid="a1ece3ee-3677-4dbc-b105-e4d91dbdf84a" x="0" y="0" width="631" height="32"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -240,7 +242,7 @@ ORDER BY s.kd_propinsi, s.kd_dati2, s.kd_kecamatan, s.kd_kelurahan, s.kd_blok, s
 PAJAK BUMI DAN BANGUNAN PERDESAAN DAN PERKOTAAN]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="5d51132d-7a12-4761-80b4-65eb1fc1f34b" x="0" y="32" width="555" height="18"/>
+				<reportElement uuid="5d51132d-7a12-4761-80b4-65eb1fc1f34b" x="0" y="32" width="631" height="18"/>
 				<textElement textAlignment="Center" markup="none">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -358,7 +360,7 @@ PAJAK BUMI DAN BANGUNAN PERDESAAN DAN PERKOTAAN]]></text>
 Dibayar (Rp.)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8671d74d-da1f-45bd-bde1-397206d10126" x="418" y="0" width="76" height="51"/>
+				<reportElement uuid="8671d74d-da1f-45bd-bde1-397206d10126" x="495" y="0" width="76" height="51"/>
 				<box rightPadding="0">
 					<pen lineWidth="0.5" lineStyle="Solid"/>
 					<topPen lineWidth="0.5" lineStyle="Solid"/>
@@ -373,7 +375,7 @@ Dibayar (Rp.)]]></text>
 (Rp.)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8a6fc77b-c444-4807-9bad-cecbb090a185" x="494" y="0" width="60" height="51"/>
+				<reportElement uuid="8a6fc77b-c444-4807-9bad-cecbb090a185" x="571" y="0" width="60" height="51"/>
 				<box rightPadding="0">
 					<pen lineWidth="0.5" lineStyle="Solid"/>
 					<topPen lineWidth="0.5" lineStyle="Solid"/>
@@ -399,6 +401,21 @@ Dibayar (Rp.)]]></text>
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NJOP Bangunan (Rp.)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1a3d022d-5499-4ad2-a9ae-8a368f462314" x="418" y="0" width="77" height="51"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Denda
+(Rp.)]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -503,7 +520,7 @@ Dibayar (Rp.)]]></text>
 				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_bayar})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8e06c26c-0958-4729-9075-c4e381a4c2bf" stretchType="RelativeToTallestObject" x="418" y="0" width="76" height="17"/>
+				<reportElement uuid="8e06c26c-0958-4729-9075-c4e381a4c2bf" stretchType="RelativeToTallestObject" x="495" y="0" width="76" height="17"/>
 				<box rightPadding="1">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
@@ -514,10 +531,10 @@ Dibayar (Rp.)]]></text>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{ketetapan}-$F{jml_bayar})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_sisa})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd-MM-yyyy" isBlankWhenNull="true">
-				<reportElement uuid="02f3b328-7b9b-403c-a483-a5cf8dbd0e1d" stretchType="RelativeToTallestObject" x="494" y="0" width="60" height="17"/>
+				<reportElement uuid="02f3b328-7b9b-403c-a483-a5cf8dbd0e1d" stretchType="RelativeToTallestObject" x="571" y="0" width="60" height="17"/>
 				<box rightPadding="1">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
@@ -530,31 +547,49 @@ Dibayar (Rp.)]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tgl_bayar}]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="cd92348a-1371-411e-a481-df64330fff35" stretchType="RelativeToTallestObject" x="418" y="0" width="77" height="17"/>
+				<box rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($F{jml_denda})]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="17" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="946f9873-f29f-49e1-b4e6-9cb08dd8e831" stretchType="RelativeToTallestObject" x="433" y="3" width="86" height="14"/>
-				<box rightPadding="2"/>
-				<textElement textAlignment="Right">
-					<font fontName="SansSerif" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($V{PAGE_NUMBER})+" dari "]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement uuid="b471fe03-9b17-4842-ba40-9c19e80ff044" x="519" y="3" width="24" height="14"/>
-				<textElement>
-					<font fontName="SansSerif" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
+			<elementGroup>
+				<elementGroup>
+					<textField isStretchWithOverflow="true">
+						<reportElement uuid="946f9873-f29f-49e1-b4e6-9cb08dd8e831" stretchType="RelativeToTallestObject" x="521" y="3" width="86" height="14"/>
+						<box rightPadding="2"/>
+						<textElement textAlignment="Right">
+							<font fontName="SansSerif" size="10"/>
+						</textElement>
+						<textFieldExpression><![CDATA[NumberFormat.getInstance().getNumberInstance(Locale.ITALIAN).format($V{PAGE_NUMBER})+" dari "]]></textFieldExpression>
+					</textField>
+					<textField evaluationTime="Report">
+						<reportElement uuid="b471fe03-9b17-4842-ba40-9c19e80ff044" x="607" y="3" width="24" height="14"/>
+						<textElement>
+							<font fontName="SansSerif" size="10"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+					</textField>
+				</elementGroup>
+			</elementGroup>
 		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="81291055-a265-4f25-bf0c-72be001e4c2f" x="0" y="0" width="554" height="20"/>
+				<reportElement uuid="81291055-a265-4f25-bf0c-72be001e4c2f" x="0" y="0" width="631" height="20"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 				</box>

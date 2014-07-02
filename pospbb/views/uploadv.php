@@ -31,6 +31,7 @@ $(document).ready(function() {
 	oTable = $('#table1').dataTable({
 		"iDisplayLength": 8,
 		"bJQueryUI" : true, 
+        "bProcessing": true,
 		"sScrollY": "325px",
 		"bScrollCollapse": false,
 		"bPaginate": false,
@@ -65,13 +66,21 @@ $(document).ready(function() {
     
     // ---- 
     $('#myform').ajaxForm({
+        beforeSubmit: function() {
+            if(!$('#userfile').val()) {
+                alert('Silahkan pilih file yang akan diupload.');
+                return false;
+            }
+        },
         beforeSend: function() {
-            $("#btn_simpan,#btn_cetak, #btn_cetak2, #btn_cetak5,#btn_cetak3,#btn_cetak4").attr('disabled', 'disabled');
+            $("#btn_simpan,#btn_cetak,#btn_cetak6, #btn_cetak2, #btn_cetak5,#btn_cetak3,#btn_cetak4").attr('disabled', 'disabled');
             
             status.empty();
             var percentVal = '0%';
             bar.width(percentVal)
             percent.html(percentVal);
+            
+            oTable.fnClearTable();
         },
         uploadProgress: function(event, position, total, percentComplete) {
             var percentVal = percentComplete + '%';
@@ -84,9 +93,10 @@ $(document).ready(function() {
             bar.width(percentVal)
             percent.html(percentVal);
             
-            oTable.fnReloadAjax('<? echo base_url('dtsrc.xxx'); ?>');
+            oTable.fnReloadAjax('<? echo base_url('assets/dokumen/dtsrc.xxx'); ?>', function() {
+                alert(response);
+            });
             $("#btn_simpan").removeAttr('disabled');
-            alert(response);
         },
         complete: function(xhr) {
             // alert(xhr.responseText);
@@ -109,7 +119,7 @@ $(document).ready(function() {
                 if (data['simpan']!='gagal') {
                     saved = data['saved'];
                     $('#data').val(JSON.stringify(saved));
-                    $("#btn_cetak,#btn_cetak2,#btn_cetak5,#btn_cetak3,#btn_cetak4").removeAttr('disabled');
+                    $("#btn_cetak,#btn_cetak6,#btn_cetak2,#btn_cetak5,#btn_cetak3,#btn_cetak4").removeAttr('disabled');
                     alert('Data telah disimpan.');
                 } else
                     alert('Data gagal disimpan.');
@@ -139,8 +149,26 @@ $(document).ready(function() {
         $(this).attr('disabled', 'disabled');
 	});
     
+	$('#btn_cetak6').click(function() {
+        $.ajax({
+            url: "<?=active_module_url('upload_nop/cetak_bank_text')?>",
+            type: "POST",
+            data: "data=" + JSON.stringify(saved),
+            success: function (msg) {
+                if(msg!='No Data') {
+                    var rpt = window.open("", "Cetak");
+                    if (!rpt) 
+                        alert('You have a popup blocker enabled. Please allow popups for this site.');
+                    else 
+                        $(rpt.document.body).html(msg);
+                } else alert(msg);
+            }
+        });
+        $(this).attr('disabled', 'disabled');
+	});
+    
 	$('#btn_cetak5').click(function() {
-        $("#rptform").attr("action", "<?echo active_module_url('upload_nop/cetak_pdf');?>");
+        $("#rptform").attr("action", "<?echo active_module_url('upload_nop/cetak_bank');?>");
         $('#rptform').submit();
         $(this).attr('disabled', 'disabled');
 	});
@@ -204,6 +232,7 @@ $(document).keypress(function(event){
             <button type="button" class="btn btn-success" id="btn_cetak3" name="btn_cetak3" disabled>Cetak 2 (PDF)</button>	
             <button type="button" class="btn btn-success" id="btn_cetak4" name="btn_cetak4" disabled>Cetak 3 (PDF)</button>	
             <button type="button" class="btn btn-success" id="btn_cetak5" name="btn_cetak5" disabled>Cetak (Bank)</button>	
+            <button type="button" class="btn btn-success" id="btn_cetak6" name="btn_cetak6" disabled>Cetak (Bank Draft)</button>	
 		</div>
         
 		<div class="asdx">
@@ -212,7 +241,7 @@ $(document).keypress(function(event){
                     <div class="span4">
                         <span class="staticfont">File Sumber</span>
                         <!--input class="input" type="file" name="userfile[]" multiple /-->
-                        <input class="input" type="file" name="userfile[]" />
+                        <input class="input" type="file" id="userfile" name="userfile[]" />
                         <span class="staticfont">&nbsp;</span>
                         <button type="submit" class="btn btn-info" id="btn_upload" name="btn_upload">Upload</button>
                     </div>
