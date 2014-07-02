@@ -128,14 +128,14 @@ class laporan extends CI_Controller
     }
 
     public function  cetak_pdf() {
-		$tgl  = $_GET['tgl'];
-		$buku = $_GET['buku'];
-		$urut = $_GET['urut'];
-        $kel  = $_GET['kel'];
+      $tgl  = $_GET['tgl'];
+      $buku = $_GET['buku'];
+      $urut = $_GET['urut'];
+      $kel  = $_GET['kel'];
 
-        $b_awal  = buku_bawah($buku);
-        $b_akhir = buku_atas($buku);
-        
+      $b_awal  = buku_bawah($buku);
+      $b_akhir = buku_atas($buku);
+          
 		//tambahan parameter join untuk relasi tabel pembayaran sppt dgn tempat pembayaran 
 		$join = '';
 		if (DEF_POS_TYPE==1) {

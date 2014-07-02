@@ -103,6 +103,7 @@ class rpt_model extends CI_Model
             $b_akhir = buku_atas($_POST['buku']);
             $where .= " and a.jml_sppt_yg_dibayar-a.denda_sppt between $b_awal and $b_akhir ";
         }
+        
         $kel = substr($_POST['kel'], 0, 7);
         if ($kel != '000.000') {
             $where .= " and a.kd_kecamatan='" . substr($kel, 0, 3) . "' 
