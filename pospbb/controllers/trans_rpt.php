@@ -357,8 +357,8 @@ class trans_rpt extends CI_Controller {
             $where .= " AND {$pos_uraian} = '{$tp_kd}'";
             
         $sql_query_r = "SELECT  
-            k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op ||' '|| k.thn_pajak_sppt kode, 
-            k.nm_wp_sppt uraian, {$pos_uraian}||':'||tp.nm_tp nm_tp, p.thn_pajak_sppt,
+            k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op kode, p.thn_pajak_sppt,
+            k.nm_wp_sppt uraian, {$pos_uraian}||':'||tp.nm_tp nm_tp, 
             (p.jml_sppt_yg_dibayar - p.denda_sppt) pokok, p.denda_sppt denda, p.jml_sppt_yg_dibayar bayar, to_char(p.tgl_pembayaran_sppt,'dd-mm-yyyy') tanggal
             FROM sppt k 
             INNER JOIN pembayaran_sppt p 
@@ -381,7 +381,7 @@ class trans_rpt extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$rptnm.'.csv"'); 
 
         if($rows = $this->db->query($sql_query_r)->result_array()){
-            $title = array('NOP','URAIAN','THN.SPPT','POKOK','DENDA','BAYAR');
+            $title = array('NOP','THN.SPPT','URAIAN','POKOK','DENDA','BAYAR');
             $this->csv_encode( $rows, $title ); 
         } else {
             echo "Tidak ada data";
@@ -536,8 +536,8 @@ class trans_rpt extends CI_Controller {
             else $where .= " AND p.user_id = {$user_kd}";
         }    
         $sql_query_r = "SELECT  
-            k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op ||' '|| k.thn_pajak_sppt kode, 
-            k.nm_wp_sppt uraian, p.thn_pajak_sppt,
+            k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op kode, p.thn_pajak_sppt,
+            k.nm_wp_sppt uraian, 
             (p.jml_sppt_yg_dibayar - p.denda_sppt) pokok, p.denda_sppt denda, p.jml_sppt_yg_dibayar bayar, to_char(p.tgl_pembayaran_sppt,'dd-mm-yyyy') tanggal,
             {$pos_uraian}||':'||tp.nm_tp nm_tp, u.nama
             FROM sppt k 
@@ -561,7 +561,7 @@ class trans_rpt extends CI_Controller {
 		header('Content-Disposition: attachment; filename="'.$rptnm.'.csv"'); 
 
         if($rows = $this->db->query($sql_query_r)->result_array()){
-            $title = array('NOP','URAIAN','THN.SPPT','POKOK','DENDA','BAYAR','TANGGAL','TEMPAT PEMBAYARAN','USER');
+            $title = array('NOP','THN.SPPT','URAIAN','POKOK','DENDA','BAYAR','TANGGAL','TEMPAT PEMBAYARAN','USER');
             $this->csv_encode( $rows, $title ); 
         } else {
             echo "Tidak ada data";
