@@ -27,21 +27,14 @@ $(document).ready(function() {
       $("#denda").val("");
       $("#utang").val("");
       $("#terbilang").val("");
-<<<<<<< HEAD
+      $("#ke").val("");
       $("#btn_bayar,#btn_cetak,#btn_cetak2,#btn_cetak3").attr('disabled', 'disabled');
 
   };
   
-  $("#nop, #tahun").change(function() {
-    data_clear();
-=======
-      $("#ke").val("");
-      $("#btn_bayar,#btn_cetak,#btn_cetak2,#btn_cetak3").attr('disabled', 'disabled');
-  };
   
   $("#nop, #tahun").keypress(function() {
       data_clear();
->>>>>>> 2cdb1f2eaf9327c067a409783936c39ab23802cc
   });
 
   $("#btn_cari").click(function() {
