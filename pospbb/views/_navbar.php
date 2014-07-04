@@ -63,6 +63,15 @@
                         </ul>
                     </li>
                     
+                    <?if ((defined('INTEGRASI_PBB_BPHTB')) && (INTEGRASI_PBB_BPHTB==1)) :?>
+                    <li class="dropdown <?echo $current=='bphtb' ? 'active' : '';?>">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">BPHTB<strong class="caret"></strong></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?=active_module_url();?>posting_bphtb">Posting BPHTB</a></li>
+                        </ul>
+                    </li>
+                    <?endif;?>
+                    
                     <?if (is_super_admin()) :?>
                     <li class="dropdown <?echo $current=='master' ? 'active' : '';?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users<strong class="caret"></strong></a>

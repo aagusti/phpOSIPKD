@@ -116,7 +116,7 @@ class pos_user extends CI_Controller {
 				'nip' => $this->input->post('nip'),
 				'jabatan' => $this->input->post('jabatan'),
 				'disabled' => $this->input->post('disabled') ? 1 : 0,
-				'updated' => date('Y-m-d')
+				// 'updated' => date('Y-m-d')
 			);
 			if($user_id = $this->pos_user_model->save($data)) {
                 // masukin ke group pospbb - kalo ada hmmmmm
