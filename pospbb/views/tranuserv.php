@@ -23,6 +23,9 @@ $(document).ready(function() {
 
         "aoColumns" : [
             { sWidth: '14%', sClass: "center" },   
+            <? if($this->uri->segment(3)=='1') : ?>
+            { sWidth: '6%', sClass: "center" },
+            <? endif; ?>
             null,  
             { sWidth: '10%', sClass: "right" },   
             { sWidth: '8%', sClass: "right" },
@@ -225,6 +228,7 @@ $(document).ready(function() {
                 <tr>
                     <? if($this->uri->segment(3)=='1') : ?>
                       <th>NOP</th>
+                      <th>Thn.SPPT</th>
                     <? else: ?>
                       <th>Tanggal</th>
                     <? endif; ?>
@@ -242,6 +246,9 @@ $(document).ready(function() {
             <tbody>
                 <tr>
                     <td></td>
+                    <? if($this->uri->segment(3)=='1') : ?>
+                    <td></td>
+                    <? endif; ?>
                     <td></td>
                     <td></td>
                     <td></td>

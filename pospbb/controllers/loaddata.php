@@ -182,7 +182,7 @@ class loaddata extends CI_Controller {
             $where .= " AND {$pos_uraian} = '{$tp_kd}'";
             
         $sql_query_r = "SELECT  
-            k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op ||' '|| k.thn_pajak_sppt kode, 
+            k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op kode, 
             k.nm_wp_sppt uraian, {$pos_uraian}||':'||tp.nm_tp nm_tp, p.thn_pajak_sppt,
             (p.jml_sppt_yg_dibayar - p.denda_sppt) pokok, p.denda_sppt denda, p.jml_sppt_yg_dibayar bayar, to_char(p.tgl_pembayaran_sppt,'dd-mm-yyyy') tanggal
             FROM sppt k 
@@ -802,6 +802,7 @@ class loaddata extends CI_Controller {
         
         $aColumns     = array(
             'kode',
+            'thn_pajak_sppt',
             'uraian',
             'pokok',
             'denda',
@@ -914,7 +915,7 @@ class loaddata extends CI_Controller {
             else $where .= " AND p.user_id = {$user_kd}";
         }    
         $sql_query_r = "SELECT  
-            k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op ||' '|| k.thn_pajak_sppt kode, 
+            k.kd_propinsi||'.'||k.kd_dati2||'-'||k.kd_kecamatan||'.'||k.kd_kelurahan ||'-'|| k.kd_blok ||'.'||k.no_urut||'.'|| k.kd_jns_op kode, 
             k.nm_wp_sppt uraian, {$pos_uraian}||':'||tp.nm_tp nm_tp, p.thn_pajak_sppt,
             (p.jml_sppt_yg_dibayar - p.denda_sppt) pokok, p.denda_sppt denda, p.jml_sppt_yg_dibayar bayar, to_char(p.tgl_pembayaran_sppt,'dd-mm-yyyy') tanggal,
             u.nama
@@ -954,7 +955,7 @@ class loaddata extends CI_Controller {
         foreach ($qry->result() as $aRow) {
             $row = array();
             for ($i = 0; $i < count($aColumns); $i++) {
-                if ($i > 1 && $i < 4)
+                if ($i > 2 && $i < 5)
                     $row[] = number_format($aRow->$aColumns[$i], 0, ',', '.');
                 else
                     $row[] = $aRow->$aColumns[$i];
@@ -966,45 +967,6 @@ class loaddata extends CI_Controller {
             $pg_total += $aRow->$aColumns[4];
             
         }
-        /*
-        $row = array();
-        $row[]              = '';
-        $row[]              = 'Jumlah Halaman';
-        $row[]              = number_format($pg_pokok, 0, ',', '.');
-        $row[]              = number_format($pg_denda, 0, ',', '.');
-        $row[]              = number_format($pg_total, 0, ',', '.');
-        $row[]              = '';
-        $output['aaData'][] = $row;
-        
-        if ($iDisplayStart + $iDisplayLength + 1 >= $iFiltered) {
-            // $sql_query_r = "SELECT  '' kode, 'TOTAL' uraian, sum(k.pbb_yg_harus_dibayar_sppt) pokok, 
-            $sql_query_r = "SELECT  '' kode, 'TOTAL' uraian, sum(p.jml_sppt_yg_dibayar - p.denda_sppt) pokok, 
-                sum(p.denda_sppt) denda, sum(p.jml_sppt_yg_dibayar) bayar, '' as tanggal
-                FROM sppt k 
-                INNER JOIN pembayaran_sppt p 
-                ON k.kd_propinsi = p.kd_propinsi
-                AND k.kd_dati2 = p.kd_dati2 
-                AND k.kd_kecamatan = p.kd_kecamatan 
-                AND k.kd_kelurahan = p.kd_kelurahan 
-                AND k.kd_blok = p.kd_blok 
-                AND k.no_urut = p.no_urut 
-                AND k.kd_jns_op = p.kd_jns_op 
-                AND k.thn_pajak_sppt = p.thn_pajak_sppt 
-                $where $search ";
-            
-            $qry = $this->db->query($sql_query_r);
-            foreach ($qry->result() as $aRow) {
-                $row = array();
-                for ($i = 0; $i < count($aColumns); $i++) {
-                    if ($i > 1 && $i < 5)
-                        $row[] = number_format($aRow->$aColumns[$i], 0, ',', '.');
-                    else
-                        $row[] = $aRow->$aColumns[$i];
-                }
-                $output['aaData'][] = $row;
-            }
-        }
-        */
         
         $output['pokok'] = number_format($pg_pokok, 0, ',', '.');
         $output['denda'] = number_format($pg_denda, 0, ',', '.');
