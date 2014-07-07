@@ -67,7 +67,9 @@
                     <li class="dropdown <?echo $current=='bphtb' ? 'active' : '';?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">BPHTB<strong class="caret"></strong></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?=active_module_url();?>posting_bphtb">Posting BPHTB</a></li>
+                            <!--li><a href="<?=active_module_url();?>posting_bphtb">Posting BPHTB</a></li-->
+                            <li><a href="<?=active_module_url();?>bphtb_unposted">BPHTB Unposted</a></li>
+                            <li><a href="<?=active_module_url();?>bphtb_posted">BPHTB Posted</a></li>
                         </ul>
                     </li>
                     <?endif;?>
