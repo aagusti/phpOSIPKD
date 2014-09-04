@@ -208,7 +208,7 @@ class loaddata extends CI_Controller {
             "iDisplayStart" => $iDisplayStart,
             "iDisplayLength" => $iDisplayLength,
             
-            // "SQL Query" => $sql_query_r,
+            "SQL Query" => $sql_query_r,
             "aaData" => array()
         );
         

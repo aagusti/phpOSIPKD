@@ -156,7 +156,7 @@ $(document).ready(function() {
                 <select id="tahun_sppt1" name="tahun_sppt1" style="width:80px;">
                 <?php                           
                     $maxtahun=date('Y');
-                    $mintahun=1999;
+                    $mintahun=1990;
                     $thncnt = $maxtahun - $mintahun;
                     for ($i=$maxtahun; $i>=$maxtahun-$thncnt; $i--)
                     {
@@ -170,7 +170,7 @@ $(document).ready(function() {
                 <select id="tahun_sppt2" name="tahun_sppt2" style="width:80px;">
                 <?php
                     $maxtahun=date('Y');
-                    $mintahun=1999;
+                    $mintahun=1990;
                     $thncnt = $maxtahun - $mintahun;
                     for ($i=$maxtahun; $i>=$maxtahun-$thncnt; $i--)
                     {
