@@ -57,7 +57,7 @@ class pos_user_model extends CI_Model {
 		
 	function get($id)
 	{
-        $sql = "select u.*,tp.*
+        $sql = "select u.*,tp.nm_tp
 				from users u
                 inner join user_pbb up on up.user_id=u.id
                 inner join tempat_pembayaran tp on {$this->pos_field()}

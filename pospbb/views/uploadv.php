@@ -30,6 +30,7 @@ $(document).ready(function() {
 
 	oTable = $('#table1').dataTable({
 		"iDisplayLength": 8,
+		"aaSorting": [[ 0, "desc" ]],
 		"bJQueryUI" : true, 
         "bProcessing": true,
 		"sScrollY": "325px",
@@ -111,7 +112,7 @@ $(document).ready(function() {
             type: 'POST',
             url: "<?=active_module_url('upload_nop/simpan')?>",
             data: $('#myform').serialize(),
-            data: "data=" + JSON.stringify(oTable.fnGetData()),
+            data: "data=" + encodeURIComponent(JSON.stringify(oTable.fnGetData())),
             async: false,
             beforeSend: function () {},
             success: function (msg) {
@@ -132,39 +133,39 @@ $(document).ready(function() {
         $.ajax({
             url: "<?=active_module_url('upload_nop/cetak')?>",
             type: "POST",
-            data: "data=" + JSON.stringify(saved),
-            // data: JSON.stringify({'data':saved}),
-            // contentType: "application/json",
-            // async: false,
+            data: "data=" + encodeURIComponent(JSON.stringify(saved)),
+            async: false,
             success: function (msg) {
                 if(msg!='No Data') {
                     var rpt = window.open("", "Cetak");
                     if (!rpt) 
                         alert('You have a popup blocker enabled. Please allow popups for this site.');
-                    else 
+                    else {
+                        $('#btn_cetak').attr('disabled', 'disabled');
                         $(rpt.document.body).html(msg);
+                    }
                 } else alert(msg);
             }
         });
-        $(this).attr('disabled', 'disabled');
 	});
     
 	$('#btn_cetak6').click(function() {
         $.ajax({
             url: "<?=active_module_url('upload_nop/cetak_bank_text')?>",
             type: "POST",
-            data: "data=" + JSON.stringify(saved),
+            data: "data=" + encodeURIComponent(JSON.stringify(saved)),
             success: function (msg) {
                 if(msg!='No Data') {
                     var rpt = window.open("", "Cetak");
                     if (!rpt) 
                         alert('You have a popup blocker enabled. Please allow popups for this site.');
-                    else 
+                    else {
+                        $('#btn_cetak6').attr('disabled', 'disabled');
                         $(rpt.document.body).html(msg);
+                    }
                 } else alert(msg);
             }
         });
-        $(this).attr('disabled', 'disabled');
 	});
     
 	$('#btn_cetak5').click(function() {
@@ -201,6 +202,9 @@ $(document).keypress(function(event){
 	if (event.which == '13') {
 		event.preventDefault();
 	}
+});
+$('#rptform').submit(function(){
+    return false;
 });
 </script>
 

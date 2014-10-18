@@ -83,6 +83,11 @@ class blok extends CI_Controller
                 if (date($data['tgl_jatuh_tempo_sppt']) < date('Y-m-d'))
                     $denda = hitdenda($sisa, $data['tgl_jatuh_tempo_sppt']);
 
+                //Untuk tahun <= 2014 denda di 0 kan. Sesuai request dari majalengka cc. EKO
+                if(KD_PROPINSI=='32' && KD_DATI2=='12')
+                    if((int)$thn <= 2014)
+                        $denda = 0;
+                        
                 $utang = $sisa + $denda;
 
                 $row = array();
@@ -180,6 +185,12 @@ class blok extends CI_Controller
                     $denda = 0;
                     if (date($row['tgl_jatuh_tempo_sppt']) < date('Y-m-d'))
                         $denda = hitdenda($sisa, $row['tgl_jatuh_tempo_sppt']);
+                        
+                    //Untuk tahun <= 2014 denda di 0 kan. Sesuai request dari majalengka cc. EKO
+                    if(KD_PROPINSI=='32' && KD_DATI2=='12')
+                        if((int)$thn <= 2014)
+                            $denda = 0;
+                            
                     $utang = $sisa + $denda;
 
                     $denda_sppt          = $denda;
@@ -239,108 +250,6 @@ class blok extends CI_Controller
         } else
             echo json_encode(array('simpan'=>'gagal'));
     }
-
-    /*
-    // OLD Version
-    public function cetak($data) {
-        if(!$this->module_auth->update) {
-        $this->session->set_flashdata('msg_warning', $this->module_auth->msg_update);
-        redirect('info');
-        }
-        if ($data){
-        ?>
-        <html>
-        <head>
-        </head>
-        <body>
-        <pre>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <?
-        foreach ($data as $d)
-        {
-        $q = $this->payment_model->get_by_nop_thn_ke($d['nop'], $d['thn'],$d['ke']);
-
-        ?>
-
-        <?=str_repeat('&nbsp;',16).$q->nm_tp?>&nbsp;
-        <?=str_repeat('&nbsp;',26).$q->thn_pajak_sppt?>&nbsp;
-        <?=str_repeat('&nbsp;',16).substr($q->nm_wp_sppt,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',23).substr($q->nm_kecamatan,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',23).substr($q->nm_kelurahan,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',16)."$q->kd_propinsi.$q->kd_dati2.$q->kd_kecamatan.$q->kd_kelurahan.$q->kd_blok-$q->no_urut.$q->kd_jns_op"?>&nbsp;
-        <?=str_repeat('&nbsp;',25).number_format($q->jml_sppt_yg_dibayar-$q->denda_sppt,0,',','.')?>&nbsp;
-        &nbsp;
-        <?=str_repeat('&nbsp;',20).date('d/m/Y',strtotime($q->tgl_jatuh_tempo_sppt))?>
-        &nbsp;
-        &nbsp;
-        <?=str_repeat('&nbsp;',8) . 'TGL PEMBAYARAN    :' . str_repeat('&nbsp;',13) . date('d/m/Y',strtotime($q->tgl_pembayaran_sppt))?>&nbsp;
-        <?=str_repeat('&nbsp;',8) . 'PEMBAYARAN        :' . str_repeat('&nbsp;',2) . 'Rp.' .str_pad(number_format($q->jml_sppt_yg_dibayar-$q->denda_sppt,0,',','.'), 18, " ", STR_PAD_LEFT)?>&nbsp;
-        <?=str_repeat('&nbsp;',8) . 'DENDA ADMINISTRSI :' . str_repeat('&nbsp;',2) . 'Rp.' .str_pad(number_format($q->denda_sppt,0,',','.'), 18, " ", STR_PAD_LEFT)?>&nbsp;
-        <?=str_repeat('&nbsp;',8) . 'TOTAL PEMBAYARAN  :' . str_repeat('&nbsp;',2) . 'Rp.' .str_pad(number_format($q->jml_sppt_yg_dibayar,0,',','.'), 18, " ", STR_PAD_LEFT)?>&nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <?
-        $sn=date('dmY',strtotime($q->tgl_pembayaran_sppt));
-        $sn.=$q->kd_propinsi.$q->kd_dati2.$q->kd_kecamatan.$q->kd_kelurahan.$q->kd_blok.$q->no_urut.$q->kd_jns_op.$q->thn_pajak_sppt;
-        ?>
-        <?=str_repeat('&nbsp;',8) . 'SN : '. md5($sn)?>&nbsp;
-
-        &nbsp;
-        <?=str_repeat('&nbsp;',8) . str_pad(date('d/m/Y',strtotime($q->tgl_pembayaran_sppt)),42," ",STR_PAD_RIGHT).str_pad(number_format($q->luas_bumi_sppt,0,',','.'),10," ",STR_PAD_LEFT)?>&nbsp;
-        <?=str_repeat('&nbsp;',50) . str_pad(number_format($q->luas_bng_sppt,0,',','.'),10," ",STR_PAD_LEFT)?>&nbsp;
-        <?=str_repeat('&nbsp;',8) . str_pad(number_format($q->jml_sppt_yg_dibayar,0,',','.'),20," ",STR_PAD_RIGHT)?>&nbsp;
-
-        <!--Lembar 2-->
-        2
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <?=str_repeat('&nbsp;',16).$q->nm_tp?>&nbsp;
-        <?=str_repeat('&nbsp;',26).$q->thn_pajak_sppt?>&nbsp;
-        <?=str_repeat('&nbsp;',16).substr($q->nm_wp_sppt,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',23).substr($q->nm_kecamatan,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',23).substr($q->nm_kelurahan,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',16)."$q->kd_propinsi.$q->kd_dati2.$q->kd_kecamatan.$q->kd_kelurahan.$q->kd_blok-$q->no_urut.$q->kd_jns_op"?>&nbsp;
-        <?=str_repeat('&nbsp;',16).number_format($q->jml_sppt_yg_dibayar,0,',','.')?>&nbsp;
-        <?=str_repeat('&nbsp;',16).date('d/m/Y',strtotime($q->tgl_pembayaran_sppt))?>&nbsp;
-        <?=str_repeat('&nbsp;',16).number_format($q->jml_sppt_yg_dibayar,0,',','.')?>&nbsp;
-
-        <!--Lembar Bank -->
-        3
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <?=str_repeat('&nbsp;',16).$q->nm_tp?>&nbsp;
-        <?=str_repeat('&nbsp;',26).$q->thn_pajak_sppt?>&nbsp;
-        <?=str_repeat('&nbsp;',16).substr($q->nm_wp_sppt,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',23).substr($q->nm_kecamatan,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',23).substr($q->nm_kelurahan,0,30)?>&nbsp;
-        <?=str_repeat('&nbsp;',16)."$q->kd_propinsi.$q->kd_dati2.$q->kd_kecamatan.$q->kd_kelurahan.$q->kd_blok-$q->no_urut.$q->kd_jns_op"?>&nbsp;
-        <?=str_repeat('&nbsp;',25).number_format($q->jml_sppt_yg_dibayar,0,',','.')?>&nbsp;
-        <?=str_repeat('&nbsp;',25).date('d/m/Y',strtotime($q->tgl_pembayaran_sppt))?>&nbsp;
-        <?=str_repeat('&nbsp;',25).number_format($q->jml_sppt_yg_dibayar,0,',','.')?>&nbsp;
-        <?
-        }
-        ?>
-        </pre>
-        </font>
-        </body>
-        </html>
-        <?
-        }
-    }
-    */
 
     public function cetak() {
         $rpt = '';
